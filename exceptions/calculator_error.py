@@ -1,3 +1,5 @@
+# Calculator Errors - Kevin Gámez
+
 class CalculatorError(Exception):
     """Base class for exceptions in this calculator."""
     pass

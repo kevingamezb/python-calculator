@@ -1,3 +1,5 @@
+# Operation 'Contract' Class - Kevin Gámez
+
 from abc import ABC, abstractmethod
 
 class Operation(ABC):

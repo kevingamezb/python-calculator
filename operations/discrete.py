@@ -1,1 +1,1 @@
-# Factorial, Fibonacci, MCM, MCD
+# Discrete Operations (Factorial, Fibonacci, LeastCommonMultiplier, GetCommonDivisor) - Andrés León [Alvaro Orjuela (Factorial)]

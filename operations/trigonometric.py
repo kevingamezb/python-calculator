@@ -1,3 +1,5 @@
+# Trigonometric Operations (Sine, Cosine, Tangent) - Kevin Gámez
+
 from math import sin, cos, tan, isclose, radians
 from core.operation import Operation
 from exceptions.calculator_error import UndefinedTangentError
