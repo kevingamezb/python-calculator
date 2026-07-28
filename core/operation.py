@@ -3,5 +3,5 @@ from abc import ABC, abstractmethod
 class Operation(ABC):
 
     @abstractmethod
-    def execute(self, *args):
+    def execute(self):
         pass
