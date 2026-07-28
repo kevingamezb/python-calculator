@@ -6,25 +6,43 @@ def _degrees_to_radians(degrees):
     """Converts degrees to radians."""
     return radians(degrees)
 
-class sine(Operation):
+class Sine(Operation):
     """Calculates the sine of a given angle."""
-    def execute(self, x, unit='radians'):
-        if unit == 'degrees':
-            x = _degrees_to_radians(x)
-        return sin(x)
+    def __init__(self, angle, unit='radians'):
+        self.angle = angle
+        self.unit = unit
 
-class cosine(Operation):
+    def execute(self):
+        angle = self.angle
+
+        if self.unit == 'degrees':
+            angle = _degrees_to_radians(angle)
+        return sin(angle)
+
+class Cosine(Operation):
     """Calculates the cosine of a given angle."""
-    def execute(self, x, unit='radians'):
-        if unit == 'degrees':
-            x = _degrees_to_radians(x)
-        return cos(x)
+    def __init__(self, angle, unit='radians'):
+        self.angle = angle
+        self.unit = unit
 
-class tangent(Operation):
+    def execute(self):
+        angle = self.angle
+
+        if self.unit == 'degrees':
+            angle = _degrees_to_radians(angle)
+        return cos(angle)
+
+class Tangent(Operation):
     """Calculates the tangent of a given angle."""
-    def execute(self, x, unit='radians'):
-        if unit == 'degrees':
-            x = _degrees_to_radians(x)
-        if isclose(cos(x), 0, abs_tol=1e-9):
+    def __init__(self, angle, unit='radians'):
+        self.angle = angle
+        self.unit = unit
+
+    def execute(self):
+        angle = self.angle
+
+        if self.unit == 'degrees':
+            angle = _degrees_to_radians(angle)
+        if isclose(cos(angle), 0, abs_tol=1e-9):
             raise UndefinedTangentError()
-        return tan(x)
+        return tan(angle)
