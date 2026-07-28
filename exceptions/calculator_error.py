@@ -1,4 +1,10 @@
-# Calculator Errors - Kevin Gámez
+# Errores de Calculadora Personalizados (Para atrapar excepciones cómodamente ) - Kevin Gámez
+"""Custom exceptions used across the calculator project.
+
+Using a common `CalculatorError` base class lets the interface layer
+catch all calculator-related errors with a single `except`, while
+still allowing specific handling per error type when needed.
+"""
 
 class CalculatorError(Exception):
     """Base class for exceptions in this calculator."""
@@ -7,6 +13,12 @@ class CalculatorError(Exception):
 class InvalidInputError(CalculatorError):
     """Exception raised for invalid inputs."""
     def __init__(self, message="Invalid input provided."):
+        self.message = message
+        super().__init__(self.message)
+
+class UnknownOperationError(CalculatorError):
+    """Exception raised for unknown operations."""
+    def __init__(self, message="Unknown operation provided."):
         self.message = message
         super().__init__(self.message)
 
