@@ -8,7 +8,7 @@ from exceptions.calculator_error import UnknownOperationError
 
 # TODO: importar aquí todas las clases de operación
 # una vez que terminen sus archivos, por ejemplo:
-# from operations.trigonometric import Sine, Cosine, Tangent
+from operations.trigonometric import Sine, Cosine, Tangent
 # from operations.arithmetic import Add, Subtract, Multiply, Divide
 # from operations.discrete import Factorial, Fibonacci, LCM, GCD
 # from operations.exponential import Power, Root
@@ -27,9 +27,9 @@ class Calculator:
         # necesita datos distintos por cada uso.
         self._operations = {
             # TODO: completar con cada operación, ej:
-            # 'sin': Sine,
-            # 'cos': Cosine,
-            # 'tan': Tangent,
+             'sin': Sine,
+             'cos': Cosine,
+             'tan': Tangent,
             # 'add': Add,
             # ...
         }
