@@ -25,15 +25,15 @@ class Sine(Operation):
         unit (str): 'radians' (default) or 'degrees'.
     """
     def __init__(self, angle, unit='radians'):
-        self.angle = angle
-        self.unit = unit
+        self._angle = angle
+        self._unit = unit
 
     def execute(self):
-        angle = self.angle
+        angle = self._angle
         # Usamos una variable local para no modificar self.angle:
         # así execute() siempre da el mismo resultado sin importar
         # cuántas veces se llame sobre el mismo objeto.
-        if self.unit == 'degrees':
+        if self._unit == 'degrees':
             angle = _degrees_to_radians(angle)
         return sin(angle)
 
@@ -47,12 +47,12 @@ class Cosine(Operation):
         unit (str): 'radians' (default) or 'degrees'.
     """
     def __init__(self, angle, unit='radians'):
-        self.angle = angle
-        self.unit = unit
+        self._angle = angle
+        self._unit = unit
 
     def execute(self):
-        angle = self.angle
-        if self.unit == 'degrees':
+        angle = self._angle
+        if self._unit == 'degrees':
             angle = _degrees_to_radians(angle)
         return cos(angle)
 
@@ -70,12 +70,12 @@ class Tangent(Operation):
             since tangent is undefined at those points.
     """
     def __init__(self, angle, unit='radians'):
-        self.angle = angle
-        self.unit = unit
+        self._angle = angle
+        self._unit = unit
 
     def execute(self):
-        angle = self.angle
-        if self.unit == 'degrees':
+        angle = self._angle
+        if self._unit == 'degrees':
             angle = _degrees_to_radians(angle)
         # isclose() en vez de == 0: por errores de precisión de punto
         # flotante, cos(x) casi nunca da exactamente 0 aunque
