@@ -1,7 +1,7 @@
 # Errores de Calculadora Personalizados (Para atrapar excepciones cómodamente ) - Kevin Gámez
 """Custom exceptions used across the calculator project.
 
-Using a common `CalculatorError` base class lets the interface layer
+Using a common `CalculatorError` base class lets the interfaces layer
 catch all calculator-related errors with a single `except`, while
 still allowing specific handling per error type when needed.
 """

@@ -1,6 +1,6 @@
 # Lógica Principal de la Calculadora - Alvaro Orjuela & Kevin Gámez
 """Main entry point that ties together all Operation subclasses through
-a registry, exposing a single `calculate` method to the interface layer.
+a registry, exposing a single `calculate` method to the interfaces layer.
 """
 
 from exceptions.calculator_error import UnknownOperationError
