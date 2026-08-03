@@ -12,12 +12,20 @@ exponenciales, impuestos) y los agreguen al registro de
 from nucleo.calculadora import Calculadora
 from excepciones.error_calculadora import ErrorCalculadora
 
-# Menú: clave del menú -> (nombre_operacion, etiqueta a mostrar)
-_MENU = {
-    '1': ('sen', 'Seno'),
-    '2': ('cos', 'Coseno'),
-    '3': ('tan', 'Tangente'),
-}
+
+def _construir_menu(calculadora):
+    """Genera el menú (clave de menú -> (nombre_operacion, etiqueta)) a
+    partir del registro real de la Calculadora, en vez de mantener una
+    lista aparte a mano. Así, cuando se agreguen operaciones al registro
+    en nucleo/calculadora.py, el menú las incluye automáticamente sin
+    tocar este archivo.
+    """
+    return {
+        str(indice): (nombre, etiqueta)
+        for indice, (nombre, etiqueta) in enumerate(
+            calculadora.operaciones_disponibles(), start=1
+        )
+    }
 
 
 def _pedir_float(mensaje):
@@ -43,15 +51,19 @@ def _pedir_unidad():
         print(f"  '{entrada}' no es una unidad válida. Usa 'radianes' o 'grados'.")
 
 
-def mostrar_menu():
-    print("\n=== Calculadora - Operaciones Trigonométricas ===")
-    for clave, (_, etiqueta) in _MENU.items():
+def mostrar_menu(menu):
+    print("\n=== Calculadora ===")
+    for clave, (_, etiqueta) in menu.items():
         print(f"  {clave}. {etiqueta}")
     print("  0. Salir")
 
 
 def ejecutar_operacion(calculadora, nombre_operacion):
     """Pide los datos necesarios y ejecuta la operación elegida."""
+    # Por ahora todas las operaciones registradas son trigonométricas,
+    # así que siempre pedimos ángulo + unidad. Cuando el equipo agregue
+    # operaciones con otros datos (dos números, etc.), habrá que dejar
+    # que cada operación declare qué inputs necesita.
     angulo = _pedir_float("Ángulo: ")
     unidad = _pedir_unidad()
 
@@ -67,20 +79,21 @@ def ejecutar_operacion(calculadora, nombre_operacion):
 
 def main():
     calculadora = Calculadora()
+    menu = _construir_menu(calculadora)
 
     while True:
-        mostrar_menu()
+        mostrar_menu(menu)
         opcion = input("\nElige una opción: ").strip()
 
         if opcion == '0':
             print("¡Hasta luego!")
             break
 
-        if opcion not in _MENU:
+        if opcion not in menu:
             print("\nOpción no válida. Intenta de nuevo.")
             continue
 
-        nombre_operacion, _ = _MENU[opcion]
+        nombre_operacion, _ = menu[opcion]
         ejecutar_operacion(calculadora, nombre_operacion)
 
 

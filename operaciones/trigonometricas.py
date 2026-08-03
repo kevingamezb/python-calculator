@@ -1,97 +1,69 @@
 # Operaciones Trigonométricas (Seno, Coseno, Tangente) - Kevin Gámez
 """
-Operaciones trigonométricas para la calculadora: seno, coseno y tangente.
+Seno, coseno y tangente para la calculadora.
 
-Cada clase recibe un ángulo (y opcionalmente su unidad) a través del
-constructor, siguiendo el contrato de `Operacion` definido en nucleo/operacion.py.
+Las tres reciben un ángulo y (opcionalmente) su unidad. La clase base
+`OperacionAngular` hace el trabajo común: valida la unidad y convierte
+a radianes, para no repetir ese código en cada operación.
 """
 
 from math import sin, cos, tan, isclose, radians
 from nucleo.operacion import Operacion
 from excepciones.error_calculadora import ErrorTangenteNoDefinida, ErrorUnidadInvalida
 
+# Unidades aceptadas. Se comparan en minúsculas, por eso normalizamos
+# con .lower() al construir la operación: así 'grados', 'GRADOS' o
+# 'Grados' valen lo mismo.
 _UNIDADES_VALIDAS = ('radianes', 'grados')
 
 
-def _grados_a_radianes(grados):
-    """Convierte un ángulo en grados a radianes."""
-    return radians(grados)
+class OperacionAngular(Operacion):
+    """Base para operaciones que reciben un ángulo y su unidad."""
 
-
-class Seno(Operacion):
-    """
-    Calcula el seno de un ángulo dado.
-
-    Argumentos:
-        angulo (float): el valor del ángulo.
-        unidad (str): 'radianes' (por defecto) o 'grados'.
-
-    Lanza:
-        ErrorUnidadInvalida: si la unidad no es 'radianes' ni 'grados'.
-    """
     def __init__(self, angulo, unidad='radianes'):
+        # Normalizamos la unidad a minúsculas. Si no es un texto, la
+        # dejamos vacía para que falle la validación de abajo.
+        unidad = unidad.lower() if isinstance(unidad, str) else ''
         if unidad not in _UNIDADES_VALIDAS:
             raise ErrorUnidadInvalida()
         self._angulo = angulo
         self._unidad = unidad
 
-    def ejecutar(self):
-        angulo = self._angulo
-        # Usamos una variable local para no modificar self._angulo:
-        # así ejecutar() siempre da el mismo resultado sin importar
-        # cuántas veces se llame sobre el mismo objeto.
-        if self._unidad == 'grados':
-            angulo = _grados_a_radianes(angulo)
-        return sin(angulo)
+    def _angulo_en_radianes(self):
+        """Devuelve el ángulo convertido a radianes.
 
-
-class Coseno(Operacion):
-    """
-    Calcula el coseno de un ángulo dado.
-
-    Argumentos:
-        angulo (float): el valor del ángulo.
-        unidad (str): 'radianes' (por defecto) o 'grados'.
-
-    Lanza:
-        ErrorUnidadInvalida: si la unidad no es 'radianes' ni 'grados'.
-    """
-    def __init__(self, angulo, unidad='radianes'):
-        if unidad not in _UNIDADES_VALIDAS:
-            raise ErrorUnidadInvalida()
-        self._angulo = angulo
-        self._unidad = unidad
-
-    def ejecutar(self):
+        Usamos una variable local para no modificar self._angulo:
+        así ejecutar() siempre da el mismo resultado aunque se llame
+        varias veces sobre el mismo objeto.
+        """
         angulo = self._angulo
         if self._unidad == 'grados':
-            angulo = _grados_a_radianes(angulo)
-        return cos(angulo)
+            angulo = radians(angulo)
+        return angulo
 
 
-class Tangente(Operacion):
-    """
-    Calcula la tangente de un ángulo dado.
-
-    Argumentos:
-        angulo (float): el valor del ángulo.
-        unidad (str): 'radianes' (por defecto) o 'grados'.
-
-    Lanza:
-        ErrorUnidadInvalida: si la unidad no es 'radianes' ni 'grados'.
-        ErrorTangenteNoDefinida: si cos(angulo) es (cercano a) cero,
-            ya que la tangente no está definida en esos puntos.
-    """
-    def __init__(self, angulo, unidad='radianes'):
-        if unidad not in _UNIDADES_VALIDAS:
-            raise ErrorUnidadInvalida()
-        self._angulo = angulo
-        self._unidad = unidad
+class Seno(OperacionAngular):
+    """Calcula el seno del ángulo."""
+    etiqueta = 'Seno'
 
     def ejecutar(self):
-        angulo = self._angulo
-        if self._unidad == 'grados':
-            angulo = _grados_a_radianes(angulo)
+        return sin(self._angulo_en_radianes())
+
+
+class Coseno(OperacionAngular):
+    """Calcula el coseno del ángulo."""
+    etiqueta = 'Coseno'
+
+    def ejecutar(self):
+        return cos(self._angulo_en_radianes())
+
+
+class Tangente(OperacionAngular):
+    """Calcula la tangente del ángulo."""
+    etiqueta = 'Tangente'
+
+    def ejecutar(self):
+        angulo = self._angulo_en_radianes()
         # isclose() en vez de == 0: por errores de precisión de punto
         # flotante, cos(x) casi nunca da exactamente 0 aunque
         # matemáticamente debería. abs_tol define qué tan "cerca" de

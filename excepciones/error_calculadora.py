@@ -1,69 +1,72 @@
-# Errores de Calculadora Personalizados (Para atrapar excepciones cómodamente ) - Kevin Gámez
-"""Excepciones personalizadas usadas en el proyecto de la calculadora.
+# Errores de Calculadora Personalizados - Kevin Gámez
+"""
+Excepciones propias del proyecto.
 
-Usar una clase base común `ErrorCalculadora` permite que la capa de
-interfaces atrape todos los errores de la calculadora con un único
-`except`, mientras que aún permite manejar cada tipo de error de
-forma específica cuando sea necesario.
+La clase base `ErrorCalculadora` permite que cualquier interfaz
+(consola, ventana gráfica) atrape TODOS los errores de la calculadora
+con un único `except`. Si algún día se necesita tratar un error de
+forma distinta, se puede capturar la subclase específica.
 """
 
 class ErrorCalculadora(Exception):
-    """Clase base para las excepciones de esta calculadora."""
-    def __init__(self, mensaje="Error en la calculadora."):
-        self.mensaje = mensaje
+    """Base de todos los errores de la calculadora."""
+
+    # Mensaje que se muestra cuando nadie pasa uno personalizado.
+    # Cada subclase define el suyo con la misma variable.
+    mensaje_por_defecto = "Error en la calculadora."
+
+    def __init__(self, mensaje=None):
+        # Si quien lanzó el error no pasó mensaje, usamos el
+        # mensaje_por_defecto de la clase concreta que se lanzó.
+        self.mensaje = mensaje if mensaje is not None else self.mensaje_por_defecto
         super().__init__(self.mensaje)
 
+
+# Los errores específicos solo definen su mensaje por defecto.
+# Toda la lógica de guardar el mensaje vive una sola vez, en la base.
+# Si un caso puntual necesita otro texto, se pasa el mensaje al lanzar:
+#   raise ErrorDivisionPorCero("No se puede dividir 5 entre 0")
+
 class ErrorEntradaNoValida(ErrorCalculadora):
-    """Excepción lanzada para entradas no válidas (MCM, MCD, etc.)."""
-    def __init__(self, mensaje="Entrada no válida."):
-        super().__init__(mensaje)
+    """Entradas inválidas: números que no corresponden, etc."""
+    mensaje_por_defecto = "Entrada no válida."
 
 class ErrorOperacionDesconocida(ErrorCalculadora):
-    """Excepción lanzada para operaciones desconocidas."""
-    def __init__(self, mensaje="Operación desconocida."):
-        super().__init__(mensaje)
+    """Se pidió una operación que no está en el registro."""
+    mensaje_por_defecto = "Operación desconocida."
 
 class ErrorNumeroArgumentos(ErrorCalculadora):
-    """Excepción lanzada cuando el número de argumentos es incorrecto."""
-    def __init__(self, mensaje="Número incorrecto de argumentos."):
-        super().__init__(mensaje)
+    """Faltan o sobran argumentos al construir la operación."""
+    mensaje_por_defecto = "Número incorrecto de argumentos."
 
 class ErrorDivisionPorCero(ErrorCalculadora):
-    """Excepción lanzada para errores de división por cero."""
-    def __init__(self, mensaje="No se permite la división por cero."):
-        super().__init__(mensaje)
+    """No se puede dividir entre cero."""
+    mensaje_por_defecto = "No se permite la división por cero."
 
 class ErrorTangenteNoDefinida(ErrorCalculadora):
-    """Excepción lanzada para valores de tangente no definidos."""
-    def __init__(self, mensaje="La tangente no está definida para esta entrada."):
-        super().__init__(mensaje)
+    """La tangente no existe donde el coseno vale cero."""
+    mensaje_por_defecto = "La tangente no está definida para esta entrada."
 
 class ErrorUnidadInvalida(ErrorCalculadora):
-    """Excepción lanzada cuando la unidad del ángulo no es válida."""
-    def __init__(self, mensaje="Unidad de ángulo no válida. Usa 'radianes' o 'grados'."):
-        super().__init__(mensaje)
+    """La unidad del ángulo no es 'radianes' ni 'grados'."""
+    mensaje_por_defecto = "Unidad de ángulo no válida. Usa 'radianes' o 'grados'."
 
 class ErrorFactorialNegativo(ErrorCalculadora):
-    """Excepción lanzada para entradas de factorial negativas."""
-    def __init__(self, mensaje="El factorial no está definido para números negativos."):
-        super().__init__(mensaje)
+    """El factorial no existe para números negativos."""
+    mensaje_por_defecto = "El factorial no está definido para números negativos."
 
 class ErrorFactorialNoEntero(ErrorCalculadora):
-    """Excepción lanzada para entradas de factorial no enteras."""
-    def __init__(self, mensaje="El factorial solo está definido para números enteros."):
-        super().__init__(mensaje)
+    """El factorial solo existe para números enteros."""
+    mensaje_por_defecto = "El factorial solo está definido para números enteros."
 
 class ErrorFibonacciNegativo(ErrorCalculadora):
-    """Excepción lanzada para entradas de Fibonacci negativas."""
-    def __init__(self, mensaje="El fibonacci no está definido para números negativos."):
-        super().__init__(mensaje)
+    """La sucesión de Fibonacci empieza en 0; no hay términos negativos."""
+    mensaje_por_defecto = "El fibonacci no está definido para números negativos."
 
 class ErrorNumeroImaginario(ErrorCalculadora):
-    """Excepción lanzada para operaciones que resultan en números imaginarios."""
-    def __init__(self, mensaje="La operación resultó en un número imaginario."):
-        super().__init__(mensaje)
+    """El resultado sería un número imaginario (ej. raíz par de un negativo)."""
+    mensaje_por_defecto = "La operación resultó en un número imaginario."
 
 class ErrorPotenciaIndefinida(ErrorCalculadora):
-    """Excepción lanzada cuando una potencia es indefinida."""
-    def __init__(self, mensaje="La potencia está indefinida para esta operación."):
-        super().__init__(mensaje)
+    """Caso indefinido en una potencia (por ejemplo, 0 elevado a 0)."""
+    mensaje_por_defecto = "La potencia está indefinida para esta operación."

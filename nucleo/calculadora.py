@@ -69,3 +69,19 @@ class Calculadora:
             )
 
         return operacion()  # usa __call__, definido en Operacion
+
+    def operaciones_disponibles(self):
+        """Devuelve el registro de operaciones disponibles como una lista
+        de tuplas (nombre_operacion, etiqueta), en el orden en que fueron
+        registradas.
+
+        Se apoya en el atributo de clase `etiqueta` que cada subclase de
+        `Operacion` debe definir (ver operaciones/trigonometricas.py para
+        un ejemplo). Así, la interfaz de consola (u otra) puede construir
+        su menú automáticamente a partir de self._operaciones, sin
+        necesidad de mantener una lista aparte sincronizada a mano.
+        """
+        return [
+            (nombre, clase_operacion.etiqueta)
+            for nombre, clase_operacion in self._operaciones.items()
+        ]
