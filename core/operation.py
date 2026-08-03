@@ -1,4 +1,4 @@
-# Operation 'Parent' Class - Kevin Gámez
+# Clase 'Padre' de Operación - Kevin Gámez
 
 from abc import ABC, abstractmethod
 

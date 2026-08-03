@@ -1,1 +1,1 @@
-# Tax Operations (ValueAggregateTax) - Shalon León
+# Operaciones de Impuestos (Impuesto de Valor Agregado) - Shalon León

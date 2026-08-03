@@ -1,4 +1,4 @@
-# Arithmetic Operations (Add, Substract, Multiply, Divide) - Shalon León
+# Operaciones Aritméticas (Suma, Resta, Multiplicación, División) - Shalon León
 from exceptions.calculator_error import DivisionByZeroError
 
 #class Divide(Operation): // Herencia de `Operation`

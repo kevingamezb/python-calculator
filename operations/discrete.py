@@ -1,1 +1,1 @@
-# Discrete Operations (Factorial, Fibonacci, LeastCommonMultiplier, GetCommonDivisor) - Andrés León [Alvaro Orjuela (Factorial)]
+# Operaciones Discretas (Factorial, Fibonacci, Mínimo Común Múltiplo, Máximo Común Divisor) - Andrés León [Alvaro Orjuela (Factorial)]

@@ -1,9 +1,9 @@
 # Operaciones Tirgonométricas (Seno, Coseno, Tangente) - Kevin Gámez
 """
-Trigonometric operations for the calculator: sine, cosine, and tangent.
+Operaciones trigonométricas para la calculadora: seno, coseno y tangente.
 
-Each class receives an angle (and optionally its unit) through the
-constructor, following the `Operation` contract defined in core/operation.py.
+Cada clase recibe un ángulo (y opcionalmente su unidad) a través del
+constructor, siguiendo el contrato de `Operation` definido en core/operation.py.
 """
 
 from math import sin, cos, tan, isclose, radians
@@ -12,17 +12,17 @@ from exceptions.calculator_error import UndefinedTangentError
 
 
 def _degrees_to_radians(degrees):
-    """Convert an angle in degrees to radians."""
+    """Convierte un ángulo en grados a radianes."""
     return radians(degrees)
 
 
 class Sine(Operation):
     """
-    Calculates the sine of a given angle.
+    Calcula el seno de un ángulo dado.
 
-    Args:
-        angle (float): the angle value.
-        unit (str): 'radians' (default) or 'degrees'.
+    Argumentos:
+        angle (float): el valor del ángulo.
+        unit (str): 'radians' (por defecto) o 'degrees'.
     """
     def __init__(self, angle, unit='radians'):
         self._angle = angle
@@ -40,11 +40,11 @@ class Sine(Operation):
 
 class Cosine(Operation):
     """
-    Calculates the cosine of a given angle.
+    Calcula el coseno de un ángulo dado.
 
-    Args:
-        angle (float): the angle value.
-        unit (str): 'radians' (default) or 'degrees'.
+    Argumentos:
+        angle (float): el valor del ángulo.
+        unit (str): 'radians' (por defecto) o 'degrees'.
     """
     def __init__(self, angle, unit='radians'):
         self._angle = angle
@@ -59,15 +59,15 @@ class Cosine(Operation):
 
 class Tangent(Operation):
     """
-    Calculates the tangent of a given angle.
+    Calcula la tangente de un ángulo dado.
 
-    Args:
-        angle (float): the angle value.
-        unit (str): 'radians' (default) or 'degrees'.
+    Argumentos:
+        angle (float): el valor del ángulo.
+        unit (str): 'radians' (por defecto) o 'degrees'.
 
-    Raises:
-        UndefinedTangentError: if cos(angle) is (close to) zero,
-            since tangent is undefined at those points.
+    Lanza:
+        UndefinedTangentError: si cos(angle) es (cercano a) cero,
+            ya que la tangente no está definida en esos puntos.
     """
     def __init__(self, angle, unit='radians'):
         self._angle = angle
@@ -84,4 +84,3 @@ class Tangent(Operation):
         if isclose(cos(angle), 0, abs_tol=1e-9):
             raise UndefinedTangentError()
         return tan(angle)
-

@@ -1,7 +1,8 @@
 # Lógica Principal de la Calculadora - Alvaro Orjuela & Kevin Gámez
 """
-Main entry point that ties together all Operation subclasses through
-a registry, exposing a single `calculate` method to the interfaces layer.
+Punto de entrada principal que conecta todas las subclases de `Operation`
+a través de un registro, exponiendo un único método `calculate` a la
+capa de interfaces.
 """
 
 from exceptions.calculator_error import UnknownOperationError
@@ -17,12 +18,12 @@ from operations.trigonometric import Sine, Cosine, Tangent
 
 
 class Calculator:
-    """Routes operation requests to the correct Operation subclass
-    using a registry built at construction time.
+    """Enruta las solicitudes de operación hacia la subclase de `Operation`
+    correcta, usando un registro construido al momento de la creación.
     """
 
     def __init__(self):
-        # Registry: mapea el nombre de la operación (lo que el usuario
+        # Registro: mapea el nombre de la operación (lo que el usuario
         # elige en el menú) a la CLASE (no instancia) correspondiente.
         # Se instancia cada vez en calculate(), porque cada operación
         # necesita datos distintos por cada uso.
@@ -36,20 +37,20 @@ class Calculator:
         }
 
     def calculate(self, operation_name, *args):
-        """Execute the operation identified by `operation_name` with
-        the given arguments.
+        """Ejecuta la operación identificada por `operation_name` con los
+        argumentos dados.
 
-        Args:
-            operation_name (str): key registered in self._operations.
-            *args: arguments forwarded to the operation's constructor.
+        Argumentos:
+            operation_name (str): clave registrada en self._operations.
+            *args: argumentos que se pasan al constructor de la operación.
 
-        Returns:
-            The numeric result of the operation.
+        Retorna:
+            El resultado numérico de la operación.
 
-        Raises:
-            UnknownOperationError: if the operation name is unknown, or if
-                the number of arguments doesn't match what the
-                operation's constructor expects.
+        Lanza:
+            UnknownOperationError: si el nombre de la operación es desconocido,
+                o si el número de argumentos no coincide con lo que el
+                constructor de la operación espera.
         """
         if operation_name not in self._operations:
             raise UnknownOperationError(f"Unknown operation: {operation_name}")
