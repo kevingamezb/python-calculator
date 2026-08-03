@@ -1,4 +1,4 @@
-# Interfaz Gráfica usando TkInter
+# Interfaz Gráfica usando TkInter - Kevin Gámez
 """
 Clase `InterfazGrafica` para crear una interfaz de usuario
 intuitiva haciendo uso de la librería ´tkinter´

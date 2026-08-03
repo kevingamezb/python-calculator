@@ -3,12 +3,12 @@
 Operaciones trigonométricas para la calculadora: seno, coseno y tangente.
 
 Cada clase recibe un ángulo (y opcionalmente su unidad) a través del
-constructor, siguiendo el contrato de `Operacion` definido en core/operation.py.
+constructor, siguiendo el contrato de `Operacion` definido en nucleo/operacion.py.
 """
 
 from math import sin, cos, tan, isclose, radians
-from core.operation import Operacion
-from exceptions.calculator_error import ErrorTangenteNoDefinida, ErrorUnidadInvalida
+from nucleo.operacion import Operacion
+from excepciones.error_calculadora import ErrorTangenteNoDefinida, ErrorUnidadInvalida
 
 _UNIDADES_VALIDAS = ('radianes', 'grados')
 

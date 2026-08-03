@@ -5,16 +5,16 @@ a través de un registro, exponiendo un único método `calcular` a la
 capa de interfaces.
 """
 
-from exceptions.calculator_error import ErrorNumeroArgumentos, ErrorOperacionDesconocida
+from excepciones.error_calculadora import ErrorNumeroArgumentos, ErrorOperacionDesconocida
 
 
 # TODO: importar aquí todas las clases de operación
 # una vez que terminen sus archivos, por ejemplo:
-from operations.trigonometric import Seno, Coseno, Tangente
-# from operations.arithmetic import Suma, Resta, Multiplicacion, Division
-# from operations.discrete import Factorial, Fibonacci, MCM, MCD
-# from operations.exponential import Potencia, Raiz
-# from operations.taxes import Iva
+from operaciones.trigonometricas import Seno, Coseno, Tangente
+# from operaciones.aritmeticas import Suma, Resta, Multiplicacion, Division
+# from operaciones.discretas import Factorial, Fibonacci, MCM, MCD
+# from operaciones.exponenciales import Potencia, Raiz
+# from operaciones.impuestos import Iva
 
 
 class Calculadora:

@@ -1,5 +1,5 @@
 # Errores de Calculadora Personalizados (Para atrapar excepciones cómodamente ) - Kevin Gámez
-"""Excepciones personalizadas usadas en todo el proyecto de la calculadora.
+"""Excepciones personalizadas usadas en el proyecto de la calculadora.
 
 Usar una clase base común `ErrorCalculadora` permite que la capa de
 interfaces atrape todos los errores de la calculadora con un único

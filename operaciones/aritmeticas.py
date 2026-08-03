@@ -1,5 +1,5 @@
 # Operaciones Aritméticas (Suma, Resta, Multiplicación, División) - Shalon León
-from exceptions.calculator_error import ErrorDivisionPorCero
+from excepciones.error_calculadora import ErrorDivisionPorCero
 
 #class Division(Operacion): // Herencia de `Operacion`
 #   def __init__(self, numero_a, numero_b): // Constructor
