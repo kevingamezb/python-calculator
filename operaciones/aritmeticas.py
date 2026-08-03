@@ -1,6 +1,8 @@
 # Operaciones Aritméticas (Suma, Resta, Multiplicación, División) - Shalon León
+
 from nucleo.operacion import Operacion
 from excepciones.error_calculadora import ErrorDivisionPorCero
+
 class Division(Operacion):
     etiqueta = 'División'
 
@@ -12,6 +14,7 @@ class Division(Operacion):
             if self._numero_b == 0:
                 raise ErrorDivisionPorCero()
             return self._numero_a / self._numero_b
+
 """
 Pasos para crear una operación:
 1. Heredar de `Operacion` (nucleo/operacion.py).
