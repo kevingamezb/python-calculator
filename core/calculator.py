@@ -5,7 +5,7 @@ a través de un registro, exponiendo un único método `calcular` a la
 capa de interfaces.
 """
 
-from exceptions.calculator_error import ErrorOperacionDesconocida
+from exceptions.calculator_error import ErrorNumeroArgumentos, ErrorOperacionDesconocida
 
 
 # TODO: importar aquí todas las clases de operación
@@ -48,9 +48,9 @@ class Calculadora:
             El resultado numérico de la operación.
 
         Lanza:
-            ErrorOperacionDesconocida: si el nombre de la operación es desconocido,
-                o si el número de argumentos no coincide con lo que el
-                constructor de la operación espera.
+            ErrorOperacionDesconocida: si el nombre de la operación es desconocido.
+            ErrorNumeroArgumentos: si el número de argumentos no coincide con lo
+                que el constructor de la operación espera.
         """
         if nombre_operacion not in self._operaciones:
             raise ErrorOperacionDesconocida(f"Operación desconocida: {nombre_operacion}")
@@ -64,7 +64,7 @@ class Calculadora:
         try:
             operacion = clase_operacion(*args)
         except TypeError as e:
-            raise ErrorOperacionDesconocida(
+            raise ErrorNumeroArgumentos(
                 f"Número incorrecto de argumentos para '{nombre_operacion}': {e}"
             )
 

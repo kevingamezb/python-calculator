@@ -8,7 +8,9 @@ constructor, siguiendo el contrato de `Operacion` definido en core/operation.py.
 
 from math import sin, cos, tan, isclose, radians
 from core.operation import Operacion
-from exceptions.calculator_error import ErrorTangenteNoDefinida
+from exceptions.calculator_error import ErrorTangenteNoDefinida, ErrorUnidadInvalida
+
+_UNIDADES_VALIDAS = ('radianes', 'grados')
 
 
 def _grados_a_radianes(grados):
@@ -23,8 +25,13 @@ class Seno(Operacion):
     Argumentos:
         angulo (float): el valor del ángulo.
         unidad (str): 'radianes' (por defecto) o 'grados'.
+
+    Lanza:
+        ErrorUnidadInvalida: si la unidad no es 'radianes' ni 'grados'.
     """
     def __init__(self, angulo, unidad='radianes'):
+        if unidad not in _UNIDADES_VALIDAS:
+            raise ErrorUnidadInvalida()
         self._angulo = angulo
         self._unidad = unidad
 
@@ -45,8 +52,13 @@ class Coseno(Operacion):
     Argumentos:
         angulo (float): el valor del ángulo.
         unidad (str): 'radianes' (por defecto) o 'grados'.
+
+    Lanza:
+        ErrorUnidadInvalida: si la unidad no es 'radianes' ni 'grados'.
     """
     def __init__(self, angulo, unidad='radianes'):
+        if unidad not in _UNIDADES_VALIDAS:
+            raise ErrorUnidadInvalida()
         self._angulo = angulo
         self._unidad = unidad
 
@@ -66,10 +78,13 @@ class Tangente(Operacion):
         unidad (str): 'radianes' (por defecto) o 'grados'.
 
     Lanza:
+        ErrorUnidadInvalida: si la unidad no es 'radianes' ni 'grados'.
         ErrorTangenteNoDefinida: si cos(angulo) es (cercano a) cero,
             ya que la tangente no está definida en esos puntos.
     """
     def __init__(self, angulo, unidad='radianes'):
+        if unidad not in _UNIDADES_VALIDAS:
+            raise ErrorUnidadInvalida()
         self._angulo = angulo
         self._unidad = unidad
 
