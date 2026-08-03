@@ -2,11 +2,11 @@
 
 from abc import ABC, abstractmethod
 
-class Operation(ABC):
+class Operacion(ABC):
 
     @abstractmethod
-    def execute(self):
+    def ejecutar(self):
         pass
 
     def __call__ (self):
-        return self.execute()
+        return self.ejecutar()

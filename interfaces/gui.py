@@ -1,16 +1,16 @@
 # Interfaz Gráfica usando TkInter
 """
-Clase `GUI` para crear una interfaz de usuario
+Clase `InterfazGrafica` para crear una interfaz de usuario
 intuitiva haciendo uso de la librería ´tkinter´
 """
 
 import tkinter as tk
-class GUI:
-    def __init__(self, master):
-        self.master = master
+class InterfazGrafica:
+    def __init__(self, padre):
+        self.padre = padre
 
-    def window(self):
+    def ventana(self):
         ...
 
-    def error_window(self):
+    def ventana_error(self):
         ...

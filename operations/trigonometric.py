@@ -1,86 +1,86 @@
-# Operaciones Tirgonométricas (Seno, Coseno, Tangente) - Kevin Gámez
+# Operaciones Trigonométricas (Seno, Coseno, Tangente) - Kevin Gámez
 """
 Operaciones trigonométricas para la calculadora: seno, coseno y tangente.
 
 Cada clase recibe un ángulo (y opcionalmente su unidad) a través del
-constructor, siguiendo el contrato de `Operation` definido en core/operation.py.
+constructor, siguiendo el contrato de `Operacion` definido en core/operation.py.
 """
 
 from math import sin, cos, tan, isclose, radians
-from core.operation import Operation
-from exceptions.calculator_error import UndefinedTangentError
+from core.operation import Operacion
+from exceptions.calculator_error import ErrorTangenteNoDefinida
 
 
-def _degrees_to_radians(degrees):
+def _grados_a_radianes(grados):
     """Convierte un ángulo en grados a radianes."""
-    return radians(degrees)
+    return radians(grados)
 
 
-class Sine(Operation):
+class Seno(Operacion):
     """
     Calcula el seno de un ángulo dado.
 
     Argumentos:
-        angle (float): el valor del ángulo.
-        unit (str): 'radians' (por defecto) o 'degrees'.
+        angulo (float): el valor del ángulo.
+        unidad (str): 'radianes' (por defecto) o 'grados'.
     """
-    def __init__(self, angle, unit='radians'):
-        self._angle = angle
-        self._unit = unit
+    def __init__(self, angulo, unidad='radianes'):
+        self._angulo = angulo
+        self._unidad = unidad
 
-    def execute(self):
-        angle = self._angle
-        # Usamos una variable local para no modificar self.angle:
-        # así execute() siempre da el mismo resultado sin importar
+    def ejecutar(self):
+        angulo = self._angulo
+        # Usamos una variable local para no modificar self._angulo:
+        # así ejecutar() siempre da el mismo resultado sin importar
         # cuántas veces se llame sobre el mismo objeto.
-        if self._unit == 'degrees':
-            angle = _degrees_to_radians(angle)
-        return sin(angle)
+        if self._unidad == 'grados':
+            angulo = _grados_a_radianes(angulo)
+        return sin(angulo)
 
 
-class Cosine(Operation):
+class Coseno(Operacion):
     """
     Calcula el coseno de un ángulo dado.
 
     Argumentos:
-        angle (float): el valor del ángulo.
-        unit (str): 'radians' (por defecto) o 'degrees'.
+        angulo (float): el valor del ángulo.
+        unidad (str): 'radianes' (por defecto) o 'grados'.
     """
-    def __init__(self, angle, unit='radians'):
-        self._angle = angle
-        self._unit = unit
+    def __init__(self, angulo, unidad='radianes'):
+        self._angulo = angulo
+        self._unidad = unidad
 
-    def execute(self):
-        angle = self._angle
-        if self._unit == 'degrees':
-            angle = _degrees_to_radians(angle)
-        return cos(angle)
+    def ejecutar(self):
+        angulo = self._angulo
+        if self._unidad == 'grados':
+            angulo = _grados_a_radianes(angulo)
+        return cos(angulo)
 
 
-class Tangent(Operation):
+class Tangente(Operacion):
     """
     Calcula la tangente de un ángulo dado.
 
     Argumentos:
-        angle (float): el valor del ángulo.
-        unit (str): 'radians' (por defecto) o 'degrees'.
+        angulo (float): el valor del ángulo.
+        unidad (str): 'radianes' (por defecto) o 'grados'.
 
     Lanza:
-        UndefinedTangentError: si cos(angle) es (cercano a) cero,
+        ErrorTangenteNoDefinida: si cos(angulo) es (cercano a) cero,
             ya que la tangente no está definida en esos puntos.
     """
-    def __init__(self, angle, unit='radians'):
-        self._angle = angle
-        self._unit = unit
+    def __init__(self, angulo, unidad='radianes'):
+        self._angulo = angulo
+        self._unidad = unidad
 
-    def execute(self):
-        angle = self._angle
-        if self._unit == 'degrees':
-            angle = _degrees_to_radians(angle)
+    def ejecutar(self):
+        angulo = self._angulo
+        if self._unidad == 'grados':
+            angulo = _grados_a_radianes(angulo)
         # isclose() en vez de == 0: por errores de precisión de punto
         # flotante, cos(x) casi nunca da exactamente 0 aunque
         # matemáticamente debería. abs_tol define qué tan "cerca" de
         # cero se considera indefinido.
-        if isclose(cos(angle), 0, abs_tol=1e-9):
-            raise UndefinedTangentError()
-        return tan(angle)
+        if isclose(cos(angulo), 0, abs_tol=1e-9):
+            raise ErrorTangenteNoDefinida()
+        return tan(angulo)

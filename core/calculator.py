@@ -1,71 +1,71 @@
 # Lógica Principal de la Calculadora - Alvaro Orjuela & Kevin Gámez
 """
-Punto de entrada principal que conecta todas las subclases de `Operation`
-a través de un registro, exponiendo un único método `calculate` a la
+Punto de entrada principal que conecta todas las subclases de `Operacion`
+a través de un registro, exponiendo un único método `calcular` a la
 capa de interfaces.
 """
 
-from exceptions.calculator_error import UnknownOperationError
+from exceptions.calculator_error import ErrorOperacionDesconocida
 
 
 # TODO: importar aquí todas las clases de operación
 # una vez que terminen sus archivos, por ejemplo:
-from operations.trigonometric import Sine, Cosine, Tangent
-# from operations.arithmetic import Add, Subtract, Multiply, Divide
-# from operations.discrete import Factorial, Fibonacci, LCM, GCD
-# from operations.exponential import Power, Root
-# from operations.taxes import Vat
+from operations.trigonometric import Seno, Coseno, Tangente
+# from operations.arithmetic import Suma, Resta, Multiplicacion, Division
+# from operations.discrete import Factorial, Fibonacci, MCM, MCD
+# from operations.exponential import Potencia, Raiz
+# from operations.taxes import Iva
 
 
-class Calculator:
-    """Enruta las solicitudes de operación hacia la subclase de `Operation`
+class Calculadora:
+    """Enruta las solicitudes de operación hacia la subclase de `Operacion`
     correcta, usando un registro construido al momento de la creación.
     """
 
     def __init__(self):
         # Registro: mapea el nombre de la operación (lo que el usuario
         # elige en el menú) a la CLASE (no instancia) correspondiente.
-        # Se instancia cada vez en calculate(), porque cada operación
+        # Se instancia cada vez en calcular(), porque cada operación
         # necesita datos distintos por cada uso.
-        self._operations = {
+        self._operaciones = {
             # TODO: completar con cada operación, ej:
-             'sin': Sine,
-             'cos': Cosine,
-             'tan': Tangent,
-            # 'add': Add,
+             'sen': Seno,
+             'cos': Coseno,
+             'tan': Tangente,
+            # 'suma': Suma,
             # ...
         }
 
-    def calculate(self, operation_name, *args):
-        """Ejecuta la operación identificada por `operation_name` con los
+    def calcular(self, nombre_operacion, *args):
+        """Ejecuta la operación identificada por `nombre_operacion` con los
         argumentos dados.
 
         Argumentos:
-            operation_name (str): clave registrada en self._operations.
+            nombre_operacion (str): clave registrada en self._operaciones.
             *args: argumentos que se pasan al constructor de la operación.
 
         Retorna:
             El resultado numérico de la operación.
 
         Lanza:
-            UnknownOperationError: si el nombre de la operación es desconocido,
+            ErrorOperacionDesconocida: si el nombre de la operación es desconocido,
                 o si el número de argumentos no coincide con lo que el
                 constructor de la operación espera.
         """
-        if operation_name not in self._operations:
-            raise UnknownOperationError(f"Unknown operation: {operation_name}")
+        if nombre_operacion not in self._operaciones:
+            raise ErrorOperacionDesconocida(f"Operación desconocida: {nombre_operacion}")
 
-        operation_class = self._operations[operation_name]
+        clase_operacion = self._operaciones[nombre_operacion]
 
         # Capturamos TypeError aquí porque es lo que Python lanza
         # automáticamente si faltan o sobran argumentos al construir
         # la operación — lo traducimos a nuestra propia jerarquía de
         # excepciones para mantener consistencia con el resto del sistema.
         try:
-            operation = operation_class(*args)
+            operacion = clase_operacion(*args)
         except TypeError as e:
-            raise UnknownOperationError(
-                f"Wrong number of arguments for '{operation_name}': {e}"
+            raise ErrorOperacionDesconocida(
+                f"Número incorrecto de argumentos para '{nombre_operacion}': {e}"
             )
 
-        return operation()  # usa __call__, definido en Operation
+        return operacion()  # usa __call__, definido en Operacion
