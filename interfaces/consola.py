@@ -1,1 +1,88 @@
 # Interfaz de Línea de Comandos - Andrés León & Shalon León
+"""
+Interfaz de consola mínima para probar la Calculadora.
+
+Por ahora solo hay operaciones trigonométricas registradas en
+`Calculadora`, así que este menú se limita a esas. Conforme el
+resto del equipo termine sus módulos (aritméticas, discretas,
+exponenciales, impuestos) y los agreguen al registro de
+`calculadora.py`, este menú se puede ir ampliando.
+"""
+
+from nucleo.calculadora import Calculadora
+from excepciones.error_calculadora import ErrorCalculadora
+
+# Menú: clave del menú -> (nombre_operacion, etiqueta a mostrar)
+_MENU = {
+    '1': ('sen', 'Seno'),
+    '2': ('cos', 'Coseno'),
+    '3': ('tan', 'Tangente'),
+}
+
+
+def _pedir_float(mensaje):
+    """Pide un número por consola, repitiendo hasta que sea válido."""
+    while True:
+        entrada = input(mensaje).strip()
+        try:
+            return float(entrada)
+        except ValueError:
+            print(f"  '{entrada}' no es un número válido. Intenta de nuevo.\n")
+
+
+def _pedir_unidad():
+    """Pide 'radianes' o 'grados', repitiendo hasta que sea válida.
+    Deja 'radianes' por defecto si el usuario no escribe nada.
+    """
+    while True:
+        entrada = input("Unidad del ángulo (radianes/grados) [radianes]: ").strip().lower()
+        if not entrada:
+            return 'radianes'
+        if entrada in ('radianes', 'grados'):
+            return entrada
+        print(f"  '{entrada}' no es una unidad válida. Usa 'radianes' o 'grados'.")
+
+
+def mostrar_menu():
+    print("\n=== Calculadora - Operaciones Trigonométricas ===")
+    for clave, (_, etiqueta) in _MENU.items():
+        print(f"  {clave}. {etiqueta}")
+    print("  0. Salir")
+
+
+def ejecutar_operacion(calculadora, nombre_operacion):
+    """Pide los datos necesarios y ejecuta la operación elegida."""
+    angulo = _pedir_float("Ángulo: ")
+    unidad = _pedir_unidad()
+
+    try:
+        resultado = calculadora.calcular(nombre_operacion, angulo, unidad)
+        print(f"\nResultado: {resultado}")
+    except ErrorCalculadora as e:
+        # Capturamos la clase base: cualquier error propio de la
+        # calculadora (unidad inválida, tangente indefinida, etc.)
+        # cae aquí sin necesidad de un except por cada tipo.
+        print(f"\nError: {e.mensaje}")
+
+
+def main():
+    calculadora = Calculadora()
+
+    while True:
+        mostrar_menu()
+        opcion = input("\nElige una opción: ").strip()
+
+        if opcion == '0':
+            print("¡Hasta luego!")
+            break
+
+        if opcion not in _MENU:
+            print("\nOpción no válida. Intenta de nuevo.")
+            continue
+
+        nombre_operacion, _ = _MENU[opcion]
+        ejecutar_operacion(calculadora, nombre_operacion)
+
+
+if __name__ == '__main__':
+    main()
