@@ -1,19 +1,18 @@
 # Operaciones Aritméticas (Suma, Resta, Multiplicación, División) - Shalon León
-"""
-Plantilla para implementar una operación nueva (ejemplo: la División).
+from nucleo.operacion import Operacion
+from excepciones.error_calculadora import ErrorDivisionPorCero
+class Division(Operacion):
+    etiqueta = 'División'
 
-    class Division(Operacion):
-        etiqueta = 'División'
-
-        def __init__(self, numero_a, numero_b):
+    def __init__(self, numero_a, numero_b):
             self._numero_a = numero_a
             self._numero_b = numero_b
 
-        def ejecutar(self):
+    def ejecutar(self):
             if self._numero_b == 0:
                 raise ErrorDivisionPorCero()
             return self._numero_a / self._numero_b
-
+"""
 Pasos para crear una operación:
 1. Heredar de `Operacion` (nucleo/operacion.py).
 2. Definir `etiqueta`: es el nombre que la interfaz mostrará en el menú.
