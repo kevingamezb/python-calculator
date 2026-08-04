@@ -16,6 +16,7 @@ def _es_entero_positivo(numero):
 
 class Factorial(Operacion):
     etiqueta = 'Factorial'
+    entradas = [('Número', 'numero')]
 
     def __init__(self, numero_a):
         self._numero_a = numero_a
@@ -37,6 +38,7 @@ class Factorial(Operacion):
 
 class MCM(Operacion):
     etiqueta = 'Mínimo Común Múltiplo'
+    entradas = [('Primer número', 'numero'), ('Segundo número', 'numero')]
 
     def __init__(self, numero_a, numero_b):
         self._numero_a = numero_a
@@ -56,6 +58,7 @@ class MCM(Operacion):
 
 class MCD(Operacion):
     etiqueta = 'Máximo Común Divisor'
+    entradas = [('Primer número', 'numero'), ('Segundo número', 'numero')]
 
     def __init__(self, numero_a, numero_b):
         self._numero_a = numero_a
@@ -74,6 +77,7 @@ class MCD(Operacion):
 
 class Fibonacci(Operacion):
     etiqueta = 'Fibonacci'
+    entradas = [('Término', 'numero')]
 
     def __init__(self, numero):
         self._numero = numero
