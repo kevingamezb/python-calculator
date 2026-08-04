@@ -19,7 +19,7 @@ marcarlas con `[x]`.
       error: si la pantalla se limpia al volver al menú, el resultado
       desaparecería antes de que el usuario lo lea.
 
-- [ ] **Atrapar Ctrl+C (KeyboardInterrupt) y EOFError** en `main()`,
+- [x] **Atrapar Ctrl+C (KeyboardInterrupt) y EOFError** en `main()`,
       para salir limpiamente ("¡Hasta luego!") sin imprimir un traceback.
 
 ## Prioridad media

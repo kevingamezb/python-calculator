@@ -17,7 +17,7 @@ from nucleo.calculadora import Calculadora
 from excepciones.error_calculadora import ErrorCalculadora
 
 
-def _construir_menu(calculadora):
+def construir_menu(calculadora):
     """Genera el menú (clave de menú -> (nombre_operacion, etiqueta)) a
     partir del registro real de la Calculadora, en vez de mantener una
     lista aparte a mano. Así, cuando se agreguen operaciones al registro
@@ -129,27 +129,3 @@ def ejecutar_operacion(calculadora, nombre_operacion):
         # calculadora (unidad inválida, división por cero, etc.)
         # cae aquí sin necesidad de un except por cada tipo.
         print(f"\nError: {e.mensaje}")
-
-
-def main():
-    calculadora = Calculadora()
-    menu = _construir_menu(calculadora)
-
-    while True:
-        mostrar_menu(menu)
-        opcion = input("\nElige una opción: ").strip()
-
-        if opcion == '0':
-            print("¡Hasta luego!")
-            break
-
-        if opcion not in menu:
-            print("\nOpción no válida. Intenta de nuevo.")
-            continue
-
-        nombre_operacion, _ = menu[opcion]
-        ejecutar_operacion(calculadora, nombre_operacion)
-
-
-if __name__ == '__main__':
-    main()
