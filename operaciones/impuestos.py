@@ -5,11 +5,9 @@ from nucleo.operacion import Operacion
 class IVA(Operacion):
     etiqueta = 'IVA'
 
-    def __init__(self, numero_a, numero_b):
-        self._numero_a = numero_a
-        self._numero_b = numero_b
+    def __init__(self, monto, porcentaje):
+        self._monto = monto
+        self._porcentaje = porcentaje
 
     def ejecutar(self):
-        multiplicacion = self._numero_a * self._numero_b
-        iva = multiplicacion / 100
-        return iva
+        return self._monto * self._porcentaje / 100
