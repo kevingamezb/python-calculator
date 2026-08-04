@@ -3,7 +3,7 @@
 Operaciones con números enteros.
 
 Nota sobre los números que llegan de la consola: la consola convierte
- lo que escribe el usuario a float (ej. "5" se vuelve 5.0). Estas
+lo que escribe el usuario a float (ej. "5" se vuelve 5.0). Estas
 operaciones exigen enteros, así que validamos con
 `float(numero).is_integer()`: devuelve True si el número es entero,
 tanto para 5 (tipo int) como para 5.0 (tipo float).
