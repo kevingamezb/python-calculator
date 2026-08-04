@@ -4,7 +4,7 @@
 # - Kevin Sebastián Gámez Benítez (1804920)
 # - Andres Felipe Leon            (1804913)
 # - Shalon Valentiana León        (1804926)
-# - Alvaro
+# - Alvaro Orjuela                (1804923)
 
 
 # Imports
