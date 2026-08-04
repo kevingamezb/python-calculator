@@ -40,6 +40,11 @@ class Calculadora:
             'MCD'           :  MCD,
         }
 
+        # Memoria de la calculadora: guarda el último resultado calculado
+        # para que la interfaz pueda ofrecerlo como entrada por defecto
+        # en la siguiente operación (modo acumulativo).
+        self._ultimo_resultado = None
+
     def calcular(self, nombre_operacion, *args):
         """Ejecuta la operación identificada por `nombre_operacion` con los
         argumentos dados.
@@ -55,6 +60,11 @@ class Calculadora:
             ErrorOperacionDesconocida: si el nombre de la operación es desconocido.
             ErrorNumeroArgumentos: si el número de argumentos no coincide con lo
                 que el constructor de la operación espera.
+
+        Nota:
+            Al terminar con éxito, guarda el resultado en `_ultimo_resultado`
+            (la "memoria" de la calculadora), para que la interfaz pueda
+            ofrecerlo como entrada por defecto en la siguiente operación.
         """
         if nombre_operacion not in self._operaciones:
             raise ErrorOperacionDesconocida(f"Operación desconocida: {nombre_operacion}")
@@ -83,7 +93,19 @@ class Calculadora:
 
         # operacion() ejecuta __call__ (definido en Operacion), que a su
         # vez llama a ejecutar(): el método que cada operación implementa.
-        return operacion()
+        resultado = operacion()
+
+        # Guardamos el resultado en la memoria. Si la operación lanzó un
+        # error, esta línea nunca se alcanza y la memoria no cambia.
+        self._ultimo_resultado = resultado
+        return resultado
+
+    def ultimo_resultado(self):
+        """Devuelve el último resultado calculado (o None si aún no se
+        ha calculado nada). La consola lo usa como entrada por defecto
+        para encadenar operaciones.
+        """
+        return self._ultimo_resultado
 
     def obtener_clase(self, nombre_operacion):
         """Devuelve la clase (no la instancia) registrada para ese nombre.
