@@ -30,6 +30,22 @@ class MCM(Operacion):
             self._numero_a , self._numero_b = self._numero_b, self._numero_a % self._numero_b
             return self._numero_a
 
+
+
+class MCD(Operacion):
+    etiqueta = "Maximo comun divisor"
+
+    def __int__(self, numero_a, numero_b):
+        self._numero_a= numero_a
+        self._numero_b= numero_b
+
+    def ejecutar(self): 
+        for i in range (min(self._numero_a , self._numero_b), 0,-1):
+            if self._numero_a % i == 0 and self._numero_b % i ==0:
+                return i
+
+            
+
 class Fibonacci(Operacion):
     etiqueta = "Fibonacci"
 
