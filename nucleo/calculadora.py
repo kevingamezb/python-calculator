@@ -97,6 +97,17 @@ class Calculadora:
         # vez llama a ejecutar(): el método que cada operación implementa.
         resultado = operacion()
 
+        # Redondeamos ANTES de guardar en memoria, no solo al imprimir.
+        # Los floats en Python arrastran "basura" de precisión binaria
+        # (ej. 0.1 + 0.2 da 0.30000000000000004, no 0.3 exacto). Si
+        # guardáramos el valor crudo, esa basura se propagaría a la
+        # siguiente operación en modo acumulativo (ultimo_resultado),
+        # aunque en pantalla se vea redondeado con %.5f. Redondeando
+        # aquí, en el origen, la memoria y lo que se muestra quedan
+        # consistentes.
+        if isinstance(resultado, float):
+            resultado = round(resultado, 5)
+
         # Guardamos el resultado en la memoria. Si la operación lanzó un
         # error, esta línea nunca se alcanza y la memoria no cambia.
         self._ultimo_resultado = resultado
