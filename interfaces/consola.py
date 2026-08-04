@@ -153,6 +153,7 @@ def ejecutar_operacion(calculadora, nombre_operacion):
         # cuántos sean.
         resultado = calculadora.calcular(nombre_operacion, *entradas)
         print(f"\nResultado: {resultado}")
+        pausar_mensaje()
 
     except ErrorCalculadora as e:
         # Capturamos la clase base: cualquier error propio de la
