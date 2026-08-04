@@ -60,19 +60,27 @@ def mostrar_menu(menu):
 
 def ejecutar_operacion(calculadora, nombre_operacion):
     """Pide los datos necesarios y ejecuta la operación elegida."""
-    # Por ahora todas las operaciones registradas son trigonométricas,
-    # así que siempre pedimos ángulo + unidad. Cuando el equipo agregue
-    # operaciones con otros datos (dos números, etc.), habrá que dejar
-    # que cada operación declare qué inputs necesita.
-    angulo = _pedir_float("Ángulo: ")
-    unidad = _pedir_unidad()
-
+    # Las operaciones trigonométricas necesitan ángulo + unidad.
+    # Las operaciones aritméticas e IVA necesitan dos números.
+    
     try:
-        resultado = calculadora.calcular(nombre_operacion, angulo, unidad)
+        if nombre_operacion in ('sen', 'cos', 'tan'):
+            angulo = _pedir_float("Ángulo: ")
+            unidad = _pedir_unidad()
+
+            resultado = calculadora.calcular(nombre_operacion, angulo, unidad)
+
+        elif nombre_operacion in ('Suma', 'Resta', 'Multiplicacion', 'Division', 'IVA'):
+            numero_a = _pedir_float("Primer número: ")
+            numero_b = _pedir_float("Segundo número: ")
+
+            resultado = calculadora.calcular(nombre_operacion, numero_a, numero_b)
+
         print(f"\nResultado: {resultado}")
+
     except ErrorCalculadora as e:
         # Capturamos la clase base: cualquier error propio de la
-        # calculadora (unidad inválida, tangente indefinida, etc.)
+        # calculadora (unidad inválida, división por cero, etc.)
         # cae aquí sin necesidad de un except por cada tipo.
         print(f"\nError: {e.mensaje}")
 

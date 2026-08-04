@@ -12,7 +12,7 @@ from operaciones.trigonometricas import Seno, Coseno, Tangente
 from operaciones.aritmeticas import Suma, Resta, Multiplicacion, Division
 # from operaciones.discretas import Factorial, Fibonacci, MCM, MCD
 # from operaciones.exponenciales import Potencia, Raiz
-# from operaciones.impuestos import Iva
+from operaciones.impuestos import IVA
 
 
 class Calculadora:
@@ -34,6 +34,7 @@ class Calculadora:
             'sen'           :  Seno,
             'cos'           :  Coseno,
             'tan'           :  Tangente,
+            'IVA': IVA,
         }
 
     def calcular(self, nombre_operacion, *args):
