@@ -21,7 +21,13 @@ la de consola.
 """
 
 from nucleo.calculadora import Calculadora
-from interfaces.consola import construir_menu, mostrar_menu, ejecutar_operacion
+from interfaces.consola import (
+        construir_menu,
+        ejecutar_operacion,
+        mostrar_menu,
+        limpiar_pantalla,
+        pausar_mensaje
+        )
 
 
 def main():
@@ -30,6 +36,7 @@ def main():
 
     while True:
         try:
+            limpiar_pantalla()
             mostrar_menu(menu)
             opcion = input("\nElige una opción: ").strip()
 
@@ -38,13 +45,13 @@ def main():
                 break
 
             if opcion not in menu:
-                print("\nOpción no válida. Intenta de nuevo.")
+                pausar_mensaje("\nOpción no válida. Intenta de nuevo.")
                 continue
 
             nombre_operacion, _ = menu[opcion]
             ejecutar_operacion(calculadora, nombre_operacion)
         except EOFError:
-            print("Ha ocurrido un error. Intente de nuevo.\n")
+            pausar_mensaje("Ha ocurrido un error. Intente de nuevo.\n")
         except KeyboardInterrupt:
             print("¡Hasta Luego!")
             break
