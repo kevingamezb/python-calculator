@@ -84,7 +84,8 @@ def _pedir_float(mensaje, por_defecto=None):
         try:
             return float(entrada)
         except ValueError:
-            print(f"  '{entrada}' no es un número válido. Intenta de nuevo.\n")
+            print(f"'{entrada}' no es un número válido. Intenta de nuevo.\n")
+            pausar_mensaje('')
 
 
 def _pedir_unidad():
@@ -98,7 +99,8 @@ def _pedir_unidad():
             return 'radianes'
         if entrada in ('radianes', 'grados'):
             return entrada
-        print(f"  '{entrada}' no es una unidad válida. Usa 'radianes' o 'grados'.")
+        print(f" '{entrada}' no es una unidad válida. Usa 'radianes' o 'grados'.")
+        pausar_mensaje('')
 
 
 def _pedir_entradas(clase_operacion, por_defecto=None):
@@ -157,3 +159,4 @@ def ejecutar_operacion(calculadora, nombre_operacion):
         # calculadora (unidad inválida, división por cero, etc.)
         # cae aquí sin necesidad de un except por cada tipo.
         print(f"\nError: {e.mensaje}")
+        pausar_mensaje('')
