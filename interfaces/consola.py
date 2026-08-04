@@ -20,6 +20,17 @@ def _construir_menu(calculadora):
     en nucleo/calculadora.py, el menú las incluye automáticamente sin
     tocar este archivo.
     """
+    # Dict comprehension: igual que una list comprehension, pero hace
+    # {clave: valor}. Recorre cada opción del registro, le asigna un
+    # número de menú y guarda la tupla (nombre_operacion, etiqueta).
+    # Ejemplo de una vuelta:
+    #   indice = 1, nombre = 'sen', etiqueta = 'Seno'
+    #   -> '1': ('sen', 'Seno')
+    #
+    # enumerate() va "numerando" una lista: devuelve (0, primero),
+    # (1, segundo)... Con start=1 empezamos en 1 y no en 0, porque el
+    # 0 lo reservamos para "Salir". str(indice) convierte el número a
+    # texto, que es lo que se lee desde input().
     return {
         str(indice): (nombre, etiqueta)
         for indice, (nombre, etiqueta) in enumerate(
@@ -76,6 +87,10 @@ def ejecutar_operacion(calculadora, nombre_operacion):
     """Pide las entradas que la operación declara y la ejecuta."""
     try:
         entradas = _pedir_entradas(calculadora.obtener_clase(nombre_operacion))
+        # `*entradas` DESEMPAQUETA la lista: si entradas = [5, 3], es
+        # como escribir calcular('Suma', 5, 3). Así le pasamos a la
+        # Calculadora tantos datos como la operación pida, sin importar
+        # cuántos sean.
         resultado = calculadora.calcular(nombre_operacion, *entradas)
         print(f"\nResultado: {resultado}")
 
