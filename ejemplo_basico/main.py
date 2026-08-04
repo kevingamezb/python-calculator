@@ -11,8 +11,6 @@
 
 from math import sin, cos, tan, isclose, radians
 
-from excepciones.error_calculadora import ErrorUnidadInvalida
-
 
 # Excepciones Personalizadas (Kevin Gámez)
 
@@ -27,6 +25,9 @@ class ErrorCalculadora(Exception):
 
 class UnidadInvalida(ErrorCalculadora):
     mensaje_por_defecto = "Unidad de ángulo no válida. Usa 'radianes' o 'grados'"
+
+class TangenteNoDefinida(ErrorCalculadora):
+    mensaje_por_defecto = "La tangente no está definida para esta entrada."
 
 
 # Clases Principales (Operación (con funciones [operaciones]) y Calculadora [Kevin Gámez & Andrés León])
@@ -52,7 +53,7 @@ class Operacion:
     def _angulo_en_radianes(angulo, unidad):
         angulos = ['radianes', 'grados']
         if unidad.lower() not in angulos:
-            raise ErrorUnidadInvalida
+            raise UnidadInvalida
         if unidad.lower() == 'grados':
             angulo = radians(angulo)
         return angulo
@@ -63,6 +64,22 @@ class Operacion:
         unidad = input("Unidad: ")
 
         return sin(Operacion._angulo_en_radianes(angulo, unidad))
+
+    @staticmethod
+    def Coseno():
+        angulo = float(input("Ángulo: "))
+        unidad = input("Unidad: ")
+
+        return cos(Operacion._angulo_en_radianes(angulo, unidad))
+
+    @staticmethod
+    def Tangente():
+        angulo = float(input("Ángulo: "))
+        unidad = input("Unidad: ")
+
+        if isclose(cos(angulo), 0, abs_tol=1e-9):
+            raise TangenteNoDefinida()
+        return tan(Operacion._angulo_en_radianes(angulo, unidad))
 
     # Discretas
 
