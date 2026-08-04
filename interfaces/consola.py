@@ -14,6 +14,9 @@ resultado como primer número (modo acumulativo).
 """
 
 import os
+
+from PyQt6.QtSql import isNull
+
 from excepciones.error_calculadora import ErrorCalculadora
 
 
@@ -43,19 +46,28 @@ def construir_menu(calculadora):
         )
     }
 
+
 def limpiar_pantalla():
     """
     Método para limpiar la pantalla haciendo diferenciación
     entre Sistemas Operativos (Windows, MacOs y Linux)
     """
-    if os.name == 'nt': # Linux y MacOs usa os.system('cls')
+    if os.name == 'nt':  # Linux y MacOs usa os.system('cls')
         os.system('cls')
     else:
-        os.system('clear') # Windows usa os.system('clear')
+        os.system('clear')  # Windows usa os.system('clear')
+
 
 def pausar_mensaje(mensaje):
+    """
+    Método para mostrar un mensaje seguido de una pausa
+    en donde el usuario responde a uin input()
+    """
+    if isNull(mensaje):
+        input("Presione Enter para continuar...")
     print(mensaje + '\n')
     input("Presione Enter para continuar...")
+
 
 def _pedir_float(mensaje, por_defecto=None):
     """
