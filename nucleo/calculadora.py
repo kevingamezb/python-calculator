@@ -71,6 +71,15 @@ class Calculadora:
 
         return operacion()  # usa __call__, definido en Operacion
 
+    def obtener_clase(self, nombre_operacion):
+        """Devuelve la clase (no la instancia) registrada para ese nombre.
+
+        Lo usa la interfaz de consola para leer el atributo `entradas`
+        de la operación y pedir los datos correctos automáticamente,
+        sin mantener listas de nombres a mano.
+        """
+        return self._operaciones[nombre_operacion]
+
     def operaciones_disponibles(self):
         """Devuelve el registro de operaciones disponibles como una lista
         de tuplas (nombre_operacion, etiqueta), en el orden en que fueron
