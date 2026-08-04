@@ -20,6 +20,9 @@ _UNIDADES_VALIDAS = ('radianes', 'grados')
 class OperacionAngular(Operacion):
     """Base para operaciones que reciben un ángulo y su unidad."""
 
+    # La consola pide el ángulo y la unidad en este mismo orden.
+    entradas = [('Ángulo', 'numero'), ('Unidad', 'unidad')]
+
     def __init__(self, angulo, unidad='radianes'):
         # Normalizamos la unidad a minúsculas. Si no es un texto, la
         # dejamos vacía para que falle la validación de abajo.
