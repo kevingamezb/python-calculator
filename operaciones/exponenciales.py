@@ -6,6 +6,7 @@ from excepciones.error_calculadora import ErrorEntradaNoValida, ErrorNumeroImagi
 
 class Potencia(Operacion):
     etiqueta = 'Potencia'
+    entradas = [('Base', 'numero'), ('Exponente', 'numero')]
 
     def __init__(self, base, exponente):
         self._base = base
@@ -23,6 +24,7 @@ class Potencia(Operacion):
 
 class Raiz(Operacion):
     etiqueta = 'Raíz'
+    entradas = [('Radicando', 'numero'), ('Índice', 'numero')]
 
     def __init__(self, radicando, indice):
         self._radicando = radicando
