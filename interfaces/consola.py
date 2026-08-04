@@ -62,8 +62,9 @@ def pausar_mensaje(mensaje):
     """
     if mensaje == '':
         input("Presione Enter para continuar...")
-    print(mensaje + '\n')
-    input("Presione Enter para continuar...")
+    else:
+        print(mensaje + '\n')
+        input("Presione Enter para continuar...")
 
 
 def _pedir_float(mensaje, por_defecto=None):
@@ -101,7 +102,6 @@ def _pedir_unidad():
             return entrada
         print(f" '{entrada}' no es una unidad válida. Usa 'radianes' o 'grados'.")
         pausar_mensaje('')
-
 
 def _pedir_entradas(clase_operacion, por_defecto=None):
     """
