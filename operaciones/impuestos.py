@@ -4,6 +4,7 @@ from nucleo.operacion import Operacion
 
 class IVA(Operacion):
     etiqueta = 'IVA'
+    entradas = [('Monto', 'numero'), ('Porcentaje', 'numero')]
 
     def __init__(self, monto, porcentaje):
         self._monto = monto
