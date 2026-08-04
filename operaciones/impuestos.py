@@ -1,5 +1,7 @@
 # Operaciones de Impuestos (Impuesto de Valor Agregado) - Shalon León
+
 from nucleo.operacion import Operacion
+
 class IVA(Operacion):
     etiqueta = 'IVA'
 
