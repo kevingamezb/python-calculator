@@ -14,9 +14,6 @@ resultado como primer número (modo acumulativo).
 """
 
 import os
-
-from PyQt6.QtSql import isNull
-
 from excepciones.error_calculadora import ErrorCalculadora
 
 
@@ -63,7 +60,7 @@ def pausar_mensaje(mensaje):
     Método para mostrar un mensaje seguido de una pausa
     en donde el usuario responde a uin input()
     """
-    if isNull(mensaje):
+    if mensaje == '':
         input("Presione Enter para continuar...")
     print(mensaje + '\n')
     input("Presione Enter para continuar...")
@@ -153,7 +150,7 @@ def ejecutar_operacion(calculadora, nombre_operacion):
         # cuántos sean.
         resultado = calculadora.calcular(nombre_operacion, *entradas)
         print(f"\nResultado: {resultado}")
-        pausar_mensaje()
+        pausar_mensaje('')
 
     except ErrorCalculadora as e:
         # Capturamos la clase base: cualquier error propio de la
