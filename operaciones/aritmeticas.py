@@ -12,6 +12,36 @@ class Division(Operacion):
             if self._numero_b == 0:
                 raise ErrorDivisionPorCero()
             return self._numero_a / self._numero_b
+    
+class Suma(Operacion):
+    etiqueta = 'Suma'
+
+    def __init__(self, numero_a, numero_b):
+        self._numero_a = numero_a
+        self._numero_b = numero_b
+
+    def ejecutar(self):
+        return self._numero_a + self._numero_b
+    
+class Resta(Operacion):
+    etiqueta = 'Resta'
+
+    def __init__(self, numero_a, numero_b):
+        self._numero_a = numero_a
+        self._numero_b = numero_b
+
+    def ejecutar(self):
+        return self._numero_a - self._numero_b
+
+class Multiplicacion(Operacion):
+    etiqueta = 'Multiplicacion'
+
+    def __init__(self, numero_a, numero_b):
+        self._numero_a = numero_a
+        self._numero_b = numero_b
+
+    def ejecutar(self):
+        return self._numero_a * self._numero_b
 """
 Pasos para crear una operación:
 1. Heredar de `Operacion` (nucleo/operacion.py).
