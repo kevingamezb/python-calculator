@@ -5,6 +5,7 @@ from excepciones.error_calculadora import ErrorDivisionPorCero
 
 class Division(Operacion):
     etiqueta = 'División'
+    entradas = [('Primer número', 'numero'), ('Segundo número', 'numero')]
 
     def __init__(self, numero_a, numero_b):
         self._numero_a = numero_a
@@ -17,6 +18,7 @@ class Division(Operacion):
     
 class Suma(Operacion):
     etiqueta = 'Suma'
+    entradas = [('Primer número', 'numero'), ('Segundo número', 'numero')]
 
     def __init__(self, numero_a, numero_b):
         self._numero_a = numero_a
@@ -27,6 +29,7 @@ class Suma(Operacion):
     
 class Resta(Operacion):
     etiqueta = 'Resta'
+    entradas = [('Primer número', 'numero'), ('Segundo número', 'numero')]
 
     def __init__(self, numero_a, numero_b):
         self._numero_a = numero_a
@@ -37,6 +40,7 @@ class Resta(Operacion):
 
 class Multiplicacion(Operacion):
     etiqueta = 'Multiplicación'
+    entradas = [('Primer número', 'numero'), ('Segundo número', 'numero')]
 
     def __init__(self, numero_a, numero_b):
         self._numero_a = numero_a
