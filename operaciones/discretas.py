@@ -91,6 +91,10 @@ class Fibonacci(Operacion):
         if not float(n).is_integer():
             raise ErrorEntradaNoValida("El fibonacci solo está definido para enteros.")
 
+        # La consola manda floats (10.0); range() exige int, así que
+        # convertimos DESPUÉS de validar que es un entero.
+        n = int(n)
+
         if n == 0:
             return 0
 
