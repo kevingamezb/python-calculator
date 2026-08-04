@@ -6,7 +6,7 @@ Las tres reciben un ángulo y (opcionalmente) su unidad. La clase base
 `OperacionAngular` hace el trabajo común: valida la unidad y convierte
 a radianes, para no repetir ese código en cada operación.
 """
-
+from abc import ABC
 from math import sin, cos, tan, isclose, radians
 from nucleo.operacion import Operacion
 from excepciones.error_calculadora import ErrorTangenteNoDefinida, ErrorUnidadInvalida
@@ -17,7 +17,7 @@ from excepciones.error_calculadora import ErrorTangenteNoDefinida, ErrorUnidadIn
 _UNIDADES_VALIDAS = ('radianes', 'grados')
 
 
-class OperacionAngular(Operacion):
+class OperacionAngular(Operacion, ABC):
     """Base para operaciones que reciben un ángulo y su unidad."""
 
     # La consola pide el ángulo y la unidad en este mismo orden.
@@ -33,7 +33,8 @@ class OperacionAngular(Operacion):
         self._unidad = unidad
 
     def _angulo_en_radianes(self):
-        """Devuelve el ángulo convertido a radianes.
+        """
+        Devuelve el ángulo convertido a radianes.
 
         Usamos una variable local para no modificar self._angulo:
         así ejecutar() siempre da el mismo resultado aunque se llame

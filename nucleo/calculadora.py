@@ -14,7 +14,8 @@ from operaciones.impuestos import IVA
 
 
 class Calculadora:
-    """Enruta las solicitudes de operación hacia la subclase de `Operacion`
+    """
+    Enruta las solicitudes de operación hacia la subclase de `Operacion`
     correcta, usando un registro construido al momento de la creación.
     """
 
@@ -46,7 +47,8 @@ class Calculadora:
         self._ultimo_resultado = None
 
     def calcular(self, nombre_operacion, *args):
-        """Ejecuta la operación identificada por `nombre_operacion` con los
+        """
+        Ejecuta la operación identificada por `nombre_operacion` con los
         argumentos dados.
 
         Argumentos:
@@ -101,14 +103,16 @@ class Calculadora:
         return resultado
 
     def ultimo_resultado(self):
-        """Devuelve el último resultado calculado (o None si aún no se
+        """
+        Devuelve el último resultado calculado (o None si aún no se
         ha calculado nada). La consola lo usa como entrada por defecto
         para encadenar operaciones.
         """
         return self._ultimo_resultado
 
     def obtener_clase(self, nombre_operacion):
-        """Devuelve la clase (no la instancia) registrada para ese nombre.
+        """
+        Devuelve la clase (no la instancia) registrada para ese nombre.
 
         Lo usa la interfaz de consola para leer el atributo `entradas`
         de la operación y pedir los datos correctos automáticamente,
@@ -117,7 +121,8 @@ class Calculadora:
         return self._operaciones[nombre_operacion]
 
     def operaciones_disponibles(self):
-        """Devuelve el registro de operaciones disponibles como una lista
+        """
+        Devuelve el registro de operaciones disponibles como una lista
         de tuplas (nombre_operacion, etiqueta), en el orden en que fueron
         registradas.
 
