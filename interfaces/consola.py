@@ -62,7 +62,8 @@ def ejecutar_operacion(calculadora, nombre_operacion):
     """Pide los datos necesarios y ejecuta la operación elegida."""
     # Las operaciones trigonométricas necesitan ángulo + unidad.
     # Las operaciones aritméticas e IVA necesitan dos números.
-    
+
+    global resultado
     try:
         if nombre_operacion in ('sen', 'cos', 'tan'):
             angulo = _pedir_float("Ángulo: ")
