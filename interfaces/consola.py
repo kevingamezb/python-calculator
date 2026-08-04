@@ -18,7 +18,8 @@ from excepciones.error_calculadora import ErrorCalculadora
 
 
 def construir_menu(calculadora):
-    """Genera el menú (clave de menú -> (nombre_operacion, etiqueta)) a
+    """
+    Genera el menú (clave de menú -> (nombre_operacion, etiqueta)) a
     partir del registro real de la Calculadora, en vez de mantener una
     lista aparte a mano. Así, cuando se agreguen operaciones al registro
     en nucleo/calculadora.py, el menú las incluye automáticamente sin
@@ -43,13 +44,22 @@ def construir_menu(calculadora):
     }
 
 def limpiar_pantalla():
-    if os.name == 'nt':
+    """
+    Método para limpiar la pantalla haciendo diferenciación
+    entre Sistemas Operativos (Windows, MacOs y Linux)
+    """
+    if os.name == 'nt': # Linux y MacOs usa os.system('cls')
         os.system('cls')
     else:
-        os.system('clear')
+        os.system('clear') # Windows usa os.system('clear')
+
+def pausar_mensaje(mensaje):
+    print(mensaje + '\n')
+    input("Presione Enter para continuar...")
 
 def _pedir_float(mensaje, por_defecto=None):
-    """Pide un número por consola, repitiendo hasta que sea válido.
+    """
+    Pide un número por consola, repitiendo hasta que sea válido.
 
     Si `por_defecto` viene dado (p. ej. el último resultado) y el
     usuario solo presiona Enter, se usa ese valor sin volver a pedir.
@@ -69,7 +79,8 @@ def _pedir_float(mensaje, por_defecto=None):
 
 
 def _pedir_unidad():
-    """Pide 'radianes' o 'grados', repitiendo hasta que sea válida.
+    """
+    Pide 'radianes' o 'grados', repitiendo hasta que sea válida.
     Deja 'radianes' por defecto si el usuario no escribe nada.
     """
     while True:
@@ -82,7 +93,8 @@ def _pedir_unidad():
 
 
 def _pedir_entradas(clase_operacion, por_defecto=None):
-    """Pide las entradas que la operación declara en su atributo
+    """
+    Pide las entradas que la operación declara en su atributo
     `entradas`: lista de tuplas (etiqueta, tipo), donde tipo es
     'numero' o 'unidad'. Devuelve los valores en el mismo orden.
 
@@ -112,7 +124,8 @@ def mostrar_menu(menu):
 
 
 def ejecutar_operacion(calculadora, nombre_operacion):
-    """Pide las entradas que la operación declara y la ejecuta.
+    """
+    Pide las entradas que la operación declara y la ejecuta.
 
     Le pasa a la consola el último resultado de la Calculadora para
     ofrecerlo como entrada por defecto (modo acumulativo).
