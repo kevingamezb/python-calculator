@@ -7,6 +7,10 @@ El menú se construye a partir del registro real de `Calculadora`
 entradas que necesita en su atributo `entradas` (ver
 `nucleo/operacion.py`). Así, al registrar una operación nueva solo
 hay que declararle sus entradas: este menú se las pide automáticamente.
+
+Y la calculadora guarda el último resultado en su memoria (nucleo):
+en la operación siguiente, presionar Enter sin escribir usa ese
+resultado como primer número (modo acumulativo).
 """
 
 from nucleo.calculadora import Calculadora
@@ -39,10 +43,20 @@ def _construir_menu(calculadora):
     }
 
 
-def _pedir_float(mensaje):
-    """Pide un número por consola, repitiendo hasta que sea válido."""
+def _pedir_float(mensaje, por_defecto=None):
+    """Pide un número por consola, repitiendo hasta que sea válido.
+
+    Si `por_defecto` viene dado (p. ej. el último resultado) y el
+    usuario solo presiona Enter, se usa ese valor sin volver a pedir.
+    """
     while True:
-        entrada = input(mensaje).strip()
+        if por_defecto is not None:
+            entrada = input(f"{mensaje} [{por_defecto}]: ").strip()
+            if not entrada:
+                return por_defecto
+        else:
+            entrada = input(mensaje).strip()
+
         try:
             return float(entrada)
         except ValueError:
@@ -62,15 +76,24 @@ def _pedir_unidad():
         print(f"  '{entrada}' no es una unidad válida. Usa 'radianes' o 'grados'.")
 
 
-def _pedir_entradas(clase_operacion):
+def _pedir_entradas(clase_operacion, por_defecto=None):
     """Pide las entradas que la operación declara en su atributo
     `entradas`: lista de tuplas (etiqueta, tipo), donde tipo es
     'numero' o 'unidad'. Devuelve los valores en el mismo orden.
+
+    `por_defecto` (el último resultado) se ofrece solo en el PRIMER
+    campo de tipo 'numero': así se puede encadenar una operación con
+    el resultado de la anterior presionando Enter.
     """
+    primer_numero = True
     valores = []
     for etiqueta, tipo in clase_operacion.entradas:
         if tipo == 'numero':
-            valores.append(_pedir_float(f"{etiqueta}: "))
+            if primer_numero:
+                valores.append(_pedir_float(f"{etiqueta}: ", por_defecto))
+                primer_numero = False
+            else:
+                valores.append(_pedir_float(f"{etiqueta}: "))
         elif tipo == 'unidad':
             valores.append(_pedir_unidad())
     return valores
@@ -84,9 +107,16 @@ def mostrar_menu(menu):
 
 
 def ejecutar_operacion(calculadora, nombre_operacion):
-    """Pide las entradas que la operación declara y la ejecuta."""
+    """Pide las entradas que la operación declara y la ejecuta.
+
+    Le pasa a la consola el último resultado de la Calculadora para
+    ofrecerlo como entrada por defecto (modo acumulativo).
+    """
     try:
-        entradas = _pedir_entradas(calculadora.obtener_clase(nombre_operacion))
+        entradas = _pedir_entradas(
+            calculadora.obtener_clase(nombre_operacion),
+            calculadora.ultimo_resultado(),
+        )
         # `*entradas` DESEMPAQUETA la lista: si entradas = [5, 3], es
         # como escribir calcular('Suma', 5, 3). Así le pasamos a la
         # Calculadora tantos datos como la operación pida, sin importar
