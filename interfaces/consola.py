@@ -13,7 +13,7 @@ en la operación siguiente, presionar Enter sin escribir usa ese
 resultado como primer número (modo acumulativo).
 """
 
-from nucleo.calculadora import Calculadora
+import os
 from excepciones.error_calculadora import ErrorCalculadora
 
 
@@ -42,6 +42,11 @@ def construir_menu(calculadora):
         )
     }
 
+def limpiar_pantalla():
+    if os.name == 'nt':
+        os.system('cls')
+    else:
+        os.system('clear')
 
 def _pedir_float(mensaje, por_defecto=None):
     """Pide un número por consola, repitiendo hasta que sea válido.

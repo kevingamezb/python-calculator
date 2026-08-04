@@ -5,9 +5,9 @@ marcarlas con `[x]`.
 
 ## Prioridad alta
 
-- [ ] **Limpiar la terminal** antes de mostrar cada menú.
+- [x] **Limpiar la terminal** antes de mostrar cada menú.
       En Windows se usa `cls`; en Linux/macOS, `clear`. Conviene una
-      función `_limpiar_pantalla()` que elija el comando según el sistema:
+      función `limpiar_pantalla()` que elija el comando según el sistema:
       `os.system('cls' if os.name == 'nt' else 'clear')`.
 
 - [ ] **Pausar cuando hay un error**: después de mostrar un error,
