@@ -1,12 +1,12 @@
 # Interfaz de Línea de Comandos - Andrés León & Shalon León
 """
-Interfaz de consola mínima para probar la Calculadora.
+Interfaz de consola para probar la Calculadora.
 
-Por ahora solo hay operaciones trigonométricas registradas en
-`Calculadora`, así que este menú se limita a esas. Conforme el
-resto del equipo termine sus módulos (aritméticas, discretas,
-exponenciales, impuestos) y los agreguen al registro de
-`calculadora.py`, este menú se puede ir ampliando.
+El menú se construye a partir del registro real de `Calculadora`
+(ver `operaciones_disponibles`), y cada operación declara las
+entradas que necesita en su atributo `entradas` (ver
+`nucleo/operacion.py`). Así, al registrar una operación nueva solo
+hay que declararle sus entradas: este menú se las pide automáticamente.
 """
 
 from nucleo.calculadora import Calculadora
@@ -51,6 +51,20 @@ def _pedir_unidad():
         print(f"  '{entrada}' no es una unidad válida. Usa 'radianes' o 'grados'.")
 
 
+def _pedir_entradas(clase_operacion):
+    """Pide las entradas que la operación declara en su atributo
+    `entradas`: lista de tuplas (etiqueta, tipo), donde tipo es
+    'numero' o 'unidad'. Devuelve los valores en el mismo orden.
+    """
+    valores = []
+    for etiqueta, tipo in clase_operacion.entradas:
+        if tipo == 'numero':
+            valores.append(_pedir_float(f"{etiqueta}: "))
+        elif tipo == 'unidad':
+            valores.append(_pedir_unidad())
+    return valores
+
+
 def mostrar_menu(menu):
     print("\n=== Calculadora ===")
     for clave, (_, etiqueta) in menu.items():
@@ -59,24 +73,10 @@ def mostrar_menu(menu):
 
 
 def ejecutar_operacion(calculadora, nombre_operacion):
-    """Pide los datos necesarios y ejecuta la operación elegida."""
-    # Las operaciones trigonométricas necesitan ángulo + unidad.
-    # Las operaciones aritméticas e IVA necesitan dos números.
-
-    global resultado
+    """Pide las entradas que la operación declara y la ejecuta."""
     try:
-        if nombre_operacion in ('sen', 'cos', 'tan'):
-            angulo = _pedir_float("Ángulo: ")
-            unidad = _pedir_unidad()
-
-            resultado = calculadora.calcular(nombre_operacion, angulo, unidad)
-
-        elif nombre_operacion in ('Suma', 'Resta', 'Multiplicacion', 'Division', 'IVA'):
-            numero_a = _pedir_float("Primer número: ")
-            numero_b = _pedir_float("Segundo número: ")
-
-            resultado = calculadora.calcular(nombre_operacion, numero_a, numero_b)
-
+        entradas = _pedir_entradas(calculadora.obtener_clase(nombre_operacion))
+        resultado = calculadora.calcular(nombre_operacion, *entradas)
         print(f"\nResultado: {resultado}")
 
     except ErrorCalculadora as e:
