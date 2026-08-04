@@ -7,13 +7,13 @@ class Division(Operacion):
     etiqueta = 'División'
 
     def __init__(self, numero_a, numero_b):
-            self._numero_a = numero_a
-            self._numero_b = numero_b
+        self._numero_a = numero_a
+        self._numero_b = numero_b
 
     def ejecutar(self):
-            if self._numero_b == 0:
-                raise ErrorDivisionPorCero()
-            return self._numero_a / self._numero_b
+        if self._numero_b == 0:
+            raise ErrorDivisionPorCero()
+        return self._numero_a / self._numero_b
     
 class Suma(Operacion):
     etiqueta = 'Suma'
@@ -36,7 +36,7 @@ class Resta(Operacion):
         return self._numero_a - self._numero_b
 
 class Multiplicacion(Operacion):
-    etiqueta = 'Multiplicacion'
+    etiqueta = 'Multiplicación'
 
     def __init__(self, numero_a, numero_b):
         self._numero_a = numero_a
