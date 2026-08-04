@@ -24,7 +24,6 @@ class Calculadora:
         # Se instancia cada vez en calcular(), porque cada operación
         # necesita datos distintos por cada uso.
         self._operaciones = {
-            # TODO: completar con cada operación, ej:
             'Suma'          :  Suma,
             'Resta'         :  Resta,
             'Multiplicacion':  Multiplicacion,
@@ -62,6 +61,15 @@ class Calculadora:
 
         clase_operacion = self._operaciones[nombre_operacion]
 
+        # `*args` (asterisco antes del nombre) significa "los argumentos
+        # que sobren, guárdalos en una tupla llamada args". Así, calcular()
+        # acepta cualquier cantidad de datos: dos números (Suma), ángulo +
+        # unidad (Seno), un número (Factorial), etc.
+        #
+        # `clase_operacion(*args)` DESEMPAQUETA la tupla y le pasa los
+        # valores uno por uno al constructor. Ejemplo: si args = (5, 3),
+        # equivale a llamar Suma(5, 3).
+
         # Capturamos TypeError aquí porque es lo que Python lanza
         # automáticamente si faltan o sobran argumentos al construir
         # la operación — lo traducimos a nuestra propia jerarquía de
@@ -73,7 +81,9 @@ class Calculadora:
                 f"Número incorrecto de argumentos para '{nombre_operacion}': {e}"
             )
 
-        return operacion()  # usa __call__, definido en Operacion
+        # operacion() ejecuta __call__ (definido en Operacion), que a su
+        # vez llama a ejecutar(): el método que cada operación implementa.
+        return operacion()
 
     def obtener_clase(self, nombre_operacion):
         """Devuelve la clase (no la instancia) registrada para ese nombre.
