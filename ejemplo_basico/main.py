@@ -1,5 +1,6 @@
 # Ejemplo Sencillo (No tan modular como el código fuente [https://github.com/kevingamezb/python-calculator])
 # De Calculadora en python.
+# Esto es básicamente todo el repositorio pero en un solo archivo
 # Equipo Pochoclo + Alvarito
 # - Kevin Sebastián Gámez Benítez (1804920)
 # - Andres Felipe Leon            (1804913)
