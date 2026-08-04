@@ -2,9 +2,9 @@
 """
 Punto de entrada del programa.
 
-Por ahora solo lanza la interfaz de consola. Cuando `grafica.py`
-esté terminada, aquí se podría agregar un menú previo para elegir
-entre consola o interfaz gráfica.
+Por ahora solo lanza la interfaz de consola. Si en el futuro se
+agrega otra interfaz, aquí se podría agregar un menú previo para
+elegir cuál usar.
 """
 
 # Cómo funciona el flujo (en palabras simples):
