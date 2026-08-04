@@ -101,10 +101,8 @@ class Calculadora:
         # Los floats en Python arrastran "basura" de precisión binaria
         # (ej. 0.1 + 0.2 da 0.30000000000000004, no 0.3 exacto). Si
         # guardáramos el valor crudo, esa basura se propagaría a la
-        # siguiente operación en modo acumulativo (ultimo_resultado),
-        # aunque en pantalla se vea redondeado con %.5f. Redondeando
-        # aquí, en el origen, la memoria y lo que se muestra quedan
-        # consistentes.
+        # siguiente operación en modo acumulativo (ultimo_resultado).
+
         if isinstance(resultado, float):
             resultado = round(resultado, 5)
 
