@@ -1,17 +1,15 @@
 # Lógica Principal de la Calculadora - Alvaro Orjuela & Kevin Gámez
 """
 Punto de entrada principal que conecta todas las subclases de `Operacion`
-a través de un registro, exponiendo un único método `calcular` a la
+a través de un registro, exponiendo una única función `calcular` a la
 capa de interfaces.
 """
 
 from excepciones.error_calculadora import ErrorNumeroArgumentos, ErrorOperacionDesconocida
-
-
 # TODO: importar aquí todas las clases de operación
 # una vez que terminen sus archivos, por ejemplo:
 from operaciones.trigonometricas import Seno, Coseno, Tangente
-# from operaciones.aritmeticas import Suma, Resta, Multiplicacion, Division
+from operaciones.aritmeticas import Suma, Resta, Multiplicacion, Division
 # from operaciones.discretas import Factorial, Fibonacci, MCM, MCD
 # from operaciones.exponenciales import Potencia, Raiz
 # from operaciones.impuestos import Iva
@@ -29,11 +27,13 @@ class Calculadora:
         # necesita datos distintos por cada uso.
         self._operaciones = {
             # TODO: completar con cada operación, ej:
-             'sen': Seno,
-             'cos': Coseno,
-             'tan': Tangente,
-            # 'suma': Suma,
-            # ...
+            'Suma'          :  Suma,
+            'Resta'         :  Resta,
+            'Multiplicacion':  Multiplicacion,
+            'Division'      :  Division,
+            'sen'           :  Seno,
+            'cos'           :  Coseno,
+            'tan'           :  Tangente,
         }
 
     def calcular(self, nombre_operacion, *args):
