@@ -82,6 +82,43 @@ class Calculadora:
         su menú automáticamente a partir de self._operaciones, sin
         necesidad de mantener una lista aparte sincronizada a mano.
         """
+        # List comprehension: construye una lista nueva recorriendo algo,
+        # todo en una sola expresión. Se lee de derecha a izquierda:
+        #
+        #   for nombre, clase_operacion in self._operaciones.items()
+        #       -> self._operaciones es un dict {'sen': Seno, 'cos': Coseno, ...}.
+        #          .items() da pares (clave, valor): ('sen', Seno), ('cos', Coseno)...
+        #          El for los va desempacando uno por uno: en cada vuelta,
+        #          nombre = 'sen' y clase_operacion = Seno (la CLASE, no una
+        #          instancia; nunca se hace Seno(...) aquí).
+        #
+        #   clase_operacion.etiqueta
+        #       -> Seno.etiqueta vale 'Seno' porque quedó definido como
+        #          atributo de clase en operaciones/trigonometricas.py.
+        #          Al ser atributo de CLASE (no de instancia), se puede leer
+        #          sin crear el objeto: no hace falta un ángulo para saber
+        #          que Seno "se llama" Seno.
+        #
+        #   (nombre, clase_operacion.etiqueta)
+        #       -> arma una tupla con esos dos valores: ('sen', 'Seno').
+        #
+        #   [ ... ]
+        #       -> los corchetes de afuera dicen "guarda cada tupla que
+        #          produce el for en una lista nueva". Sin ellos, esto no
+        #          sería una list comprehension, solo una expresión suelta.
+        #
+        # ¿Por qué así y no con un for normal? Es exactamente el mismo
+        # resultado que:
+        #
+        #   resultado = []
+        #   for nombre, clase_operacion in self._operaciones.items():
+        #       resultado.append((nombre, clase_operacion.etiqueta))
+        #   return resultado
+        #
+        # pero en una sola expresión. Se usa aquí porque el caso es simple
+        # (una vuelta, una transformación, sin condicionales) y evita crear
+        # una variable intermedia (`resultado`) que solo se usa para
+        # acumular y luego se retorna: menos líneas, misma lógica.
         return [
             (nombre, clase_operacion.etiqueta)
             for nombre, clase_operacion in self._operaciones.items()
