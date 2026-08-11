@@ -7,63 +7,50 @@ que elevarlo a 1/n. Por eso las dos se calculan con el mismo operador
 ** (potencia), que es el que usa Python.
 """
 
-from nucleo.operacion import Operacion
 from excepciones.error_calculadora import ErrorEntradaNoValida, ErrorNumeroImaginario, ErrorPotenciaIndefinida
 
 
-class Potencia(Operacion):
-    etiqueta = 'Potencia'
-    entradas = [('Base', 'numero'), ('Exponente', 'numero')]
+class Exponencial:
 
-    def __init__(self, base, exponente):
-        self._base = base
-        self._exponente = exponente
+    OPERACIONES = {
+        'Potencia': ('potencia', 'Potencia', [('Base', 'numero'), ('Exponente', 'numero')]),
+        'Raiz':     ('raiz',     'Raíz',     [('Radicando', 'numero'), ('Índice', 'numero')]),
+    }
 
-    def ejecutar(self):
+    def potencia(self, base, exponente):
         # 0^0 (cero elevado a cero) es un caso indefinido en matemáticas:
         # no hay un resultado único, por eso lo tratamos como error.
-        if self._base == 0 and self._exponente == 0:
+        if base == 0 and exponente == 0:
             raise ErrorPotenciaIndefinida()
 
         # Un número negativo elevado a un exponente NO entero
         # (ej. (-8) ** 0.5) daría un número imaginario. Python sí sabe
         # calcularlo, pero nosotros preferimos avisar con nuestro error.
-        if self._base < 0 and not float(self._exponente).is_integer():
+        if base < 0 and not float(exponente).is_integer():
             raise ErrorNumeroImaginario()
 
         # ** es el operador de potencia: 2 ** 10 = 1024.
-        return self._base ** self._exponente
+        return base ** exponente
 
-
-class Raiz(Operacion):
-    etiqueta = 'Raíz'
-    entradas = [('Radicando', 'numero'), ('Índice', 'numero')]
-
-    def __init__(self, radicando, indice):
-        self._radicando = radicando
-        self._indice = indice
-
-    def ejecutar(self):
+    def raiz(self, radicando, indice):
         # "Índice" es el numerito de la raíz: en la raíz cuadrada es 2,
         # en la cúbica es 3. No puede ser 0.
-        if self._indice == 0:
+        if indice == 0:
             raise ErrorEntradaNoValida("El índice de la raíz no puede ser cero.")
 
-        if self._radicando < 0:
+        if radicando < 0:
             # Sacar la raíz de un número negativo depende del índice:
             #   - Índice IMPAR (raíz cúbica de -8): existe y da negativo (-2).
             #   - Índice PAR (raíz cuadrada de -8): no existe en los reales,
             #     sería un número imaginario.
-            # % es el operador módulo (el residuo de una división). Si
-            # indice % 2 da distinto de 0, el índice es impar.
-            if float(self._indice).is_integer() and self._indice % 2 != 0:
+            if float(indice).is_integer() and indice % 2 != 0:
                 # Para la raíz impar de un negativo: convertimos el número
                 # a positivo, sacamos la raíz y al final le ponemos el
                 # signo menos. Ej: -((-8) ** (1/3)) = -(8 ** 0.333...) = -2.
-                return -((-self._radicando) ** (1 / self._indice))
+                return -((-radicando) ** (1 / indice))
             # Índice par (o no entero): el resultado sería imaginario.
             raise ErrorNumeroImaginario()
 
         # Truco matemático: la raíz n-ésima de un número es lo mismo que
         # elevarlo a 1/n. Por eso "raíz cuadrada de 16" es 16 ** (1/2).
-        return self._radicando ** (1 / self._indice)
+        return radicando ** (1 / indice)

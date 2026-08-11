@@ -1,38 +1,41 @@
-# Clase 'Padre' de Operación - Kevin Gámez
+# Registro de Operaciones - Kevin Gámez
+"""
+Antes, cada operación (Suma, Seno, Factorial...) era su propia clase,
+obligada por `Operacion(ABC)` a implementar `ejecutar()`. Ahora solo
+hay 4 clases (una por categoría: Aritmetica, Discreta, Exponencial,
+Trigonometrica) y cada operación es un MÉTODO dentro de su categoría.
 
-# ABC = Abstract Base Class (Clase Base Abstracta). Importamos la clase y
-# el decorador abstractmethod para poder "obligar" a las subclases a
-# implementar el método ejecutar().
-from abc import ABC, abstractmethod
+El "contrato" que antes vivía en la clase (etiqueta, entradas) ahora
+vive en `OperacionRegistrada`: un envoltorio liviano que guarda esos
+mismos dos datos más el método ya "ligado" (bound method) a la
+instancia de su categoría, listo para llamarse con `operacion(*args)`.
 
-class Operacion(ABC):
+Cada clase categoría declara un diccionario de clase `OPERACIONES` con
+esta forma:
 
-    # Cada subclase declara aquí las entradas que necesita, como lista
-    # de tuplas (etiqueta, tipo). tipo puede ser 'numero' o 'unidad'.
-    # La interfaz de consola las pide automáticamente leyendo este
-    # atributo, así no hace falta tocar la consola al registrar nuevas
-    # operaciones.
-    entradas = []
+    OPERACIONES = {
+        'Suma': ('sumar', 'Suma', [('Primer número', 'numero'), ('Segundo número', 'numero')]),
+        #  ^clave para el registro   ^nombre del método   ^etiqueta   ^entradas (igual que antes)
+    }
 
-    @abstractmethod
-    def ejecutar(self):
-        # Este método NO tiene cuerpo (solo 'pass'): cada operación
-        # concreta (Suma, Seno, Factorial...) implementa aquí CÓMO se
-        # calcula. El decorador @abstractmethod hace que NO se pueda
-        # crear un objeto Operacion directamente, y que toda subclase
-        # esté obligada a escribir su propio ejecutar(). Si una subclase
-        # no lo hace, Python lanza TypeError al intentar instanciarla.
-        pass
+`nucleo/calculadora.py` recorre las 4 categorías, lee sus `OPERACIONES`
+y arma un `OperacionRegistrada` por cada una. Así, `interfaces/consola.py`
+no cambia casi nada: sigue leyendo `.entradas` y `.etiqueta` igual que
+cuando esos atributos vivían en una clase por operación.
+"""
 
-    def __call__(self):
-        # Los métodos "dunder" (de doble guion bajo) le dan significado
-        # a los operadores de Python. __call__ es el que se ejecuta
-        # cuando llamas al objeto como si fuera una función:
-        #
-        #   operacion = Suma(5, 3)   # crea el objeto
-        #   operacion()              # Python ejecuta operacion.__call__()
-        #
-        # Definirlo aquí (una sola vez) hace que TODAS las operaciones
-        # se puedan ejecutar igual con los paréntesis, sin tener que
-        # repetir este método en cada una.
-        return self.ejecutar()
+from dataclasses import dataclass
+from typing import Callable, List, Tuple
+
+
+@dataclass(frozen=True)
+class OperacionRegistrada:
+    etiqueta: str
+    entradas: List[Tuple[str, str]]
+    funcion: Callable  # método ya ligado a la instancia de su categoría (Aritmetica, Discreta...)
+
+    def __call__(self, *args):
+        # Mismo rol que el __call__ que antes vivía en Operacion: permite
+        # ejecutar `operacion_registrada(*args)` sin que quien llama sepa
+        # si por dentro es sumar(), factorial() o seno().
+        return self.funcion(*args)

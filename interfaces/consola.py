@@ -143,7 +143,7 @@ def ejecutar_operacion(calculadora, nombre_operacion):
     """
     try:
         entradas = _pedir_entradas(
-            calculadora.obtener_clase(nombre_operacion),
+            calculadora.obtener_operacion(nombre_operacion),
             calculadora.ultimo_resultado(),
         )
         # `*entradas` DESEMPAQUETA la lista: si entradas = [5, 3], es
